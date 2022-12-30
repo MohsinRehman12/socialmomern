@@ -29,7 +29,7 @@ export default function Profile() {
   }).catch(e => {
       console.log(e);
   });
-  },[])
+  },[user])
 
   return (
     <>
@@ -40,8 +40,8 @@ export default function Profile() {
       <div className="profileRight">
         <div className="profileRightTop">
           <div className="profileCover">
-            <img src={user.coverImg || PublicFolder+"cover/cover1.jpg"} className='profileCoverImg' />
-            <img src={user.profilePicture || PublicFolder+"pfp/pfp1.jpg"} className='profilePfpImg' />
+            <img src={user.coverImg ? PublicFolder+user.coverImg : PublicFolder+"cover/cover1.jpg"} className='profileCoverImg' />
+            <img src={user.profilePicture ? PublicFolder+user.profilePicture : PublicFolder+"pfp/pfp1.jpg"} className='profilePfpImg' />
           </div>``
           <div className="profileInfo">
             <h4 className="profileName">{user.username}</h4>

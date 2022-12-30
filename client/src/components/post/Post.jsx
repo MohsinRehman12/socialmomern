@@ -4,6 +4,8 @@ import {MoreVert, Favorite, Recommend, Comment} from "@mui/icons-material"
 import Axios from "axios";
 import {format} from "timeago.js";
 import {Link} from "react-router-dom";
+import { useContext } from 'react';
+import {AuthContext} from '../../context/AuthContext'
 
 
 export default function Post({post}) {
@@ -14,14 +16,27 @@ export default function Post({post}) {
   const [isLiked, setIsLiked] = useState(false)
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
+  const {user:currentUser} = useContext(AuthContext) //use nickname currentuser
+
+  useEffect (()=>{
+    setIsLiked(post.likes.includes(currentUser._id.$oid))
+  }, [currentUser._id.$oid,post.likes])
 
   const likeHandler = () =>{
+
+    
+
+    try {
+    Axios.put ("/posts/"+post._id+"/like",  
+    {userId:currentUser._id.$oid})
+
+    console.log('id is', currentUser._id.$oid)
+    } catch (error) {
+      console.log(error)
+    }
     setLike(isLiked ? like -1 : like+1)
     setIsLiked(!isLiked)
   }
-
-  const [posts, setPosts] = useState([]);
-
 
   useEffect(()=>{
     
@@ -42,8 +57,8 @@ export default function Post({post}) {
       <div className="postWrapper">
         <div className="postTop">
             <div className="postTopLeft">
-              <Link to={`profile/${user.username}`}>
-                <img src={user.profilePicture  || PublicFolder+"pfp/pfp1.jpg"} alt="" className="postPfp" />
+              <Link to={`/profile/${user.username}`}>
+                <img src={user.profilePicture ? PublicFolder + user.profilePicture : PublicFolder+"pfp/pfp1.jpg"} alt="" className="postPfp" />
               </Link>  
                 <span className="postUsername">{user.username}</span>
                 <span className="postDate">{format(post.createdAt)}</span>

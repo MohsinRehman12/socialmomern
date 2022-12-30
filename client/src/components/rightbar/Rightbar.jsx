@@ -1,15 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import "./Rightbar.css"
 import {CakeOutlined} from "@mui/icons-material"
 import {Users} from "../../testData"
 import Online from "../online/Online"
-
+import Axios from 'axios'
+import { AuthContext } from "../../context/AuthContext";
+import {Link} from "react-router-dom"
 
 
 export default function Rightbar({ user }) {
 
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
-  
+  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const [friends, setFriends] = useState([])
+
+
+  useEffect(()=>{
+
+    const getFollowers = async () =>{
+      try {
+
+        const friendList = await Axios.get("/users/friends/"+user._id)
+        
+        setFriends(friendList.data)
+        console.log('friendList', friendList.data)
+
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
+    //get around async not being used in useEffect by creating a async function and then calling it
+    getFollowers(); 
+  },[user._id])
+
   const HomeRightbar = () =>{
     return(
       <>
@@ -56,38 +81,27 @@ export default function Rightbar({ user }) {
           </div>
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
+        {friends.map((friend)=>(
+        
+        <Link to={"/profile/"+friend.username} style={{textDecoration: "none"}}>
+
           <div className="rightbarFollowing">
-            <img
-              src={`${PublicFolder}pfp/pfp1.jpg`}
+
+              <img
+              src={friend.profilePicture 
+                ? PublicFolder+friend.profilePicture 
+                : PublicFolder+"pfp/pfp1.jpg"}
               alt=""
               className="rightbarFollowingImg"
             />
-            <span className="rightbarFollowingName">John Carter</span>
+            <span className="rightbarFollowingName">
+              {friend.username}
+            </span>
+            
           </div>
-          <div className="rightbarFollowing">
-            <img
-              src={`${PublicFolder}pfp/pfp1.jpg`}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-            src={`${PublicFolder}pfp/pfp1.jpg`}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src={`${PublicFolder}pfp/pfp1.jpg`}
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-         </div>
+          </Link>
+          ))}
+          
         </div>
         </div>
 

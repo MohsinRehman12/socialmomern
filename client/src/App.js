@@ -4,29 +4,33 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Profile from "./pages/profile/Profile"
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register"
-import React from "react";
+import React, { useContext } from "react";
 import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  Navigate
 } from "react-router-dom";
+import { AuthContext } from "./context/AuthContext";
 
 
 
 function App() {
+
+  const {user} = useContext(AuthContext)
    
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Home/>}>
+        <Route exact path="/" element={user ? <Home/> : <Register/>}>
 
         </Route>
 
-        <Route exact path="/login" element={<Login/>}>
+        <Route exact path="/login" element={user ? <Navigate to="/" /> : <Login/>}>
         </Route>
 
-        <Route exact path="/register" element={<Register />}>
+        <Route exact path="/register" element={user ? <Navigate to="/" /> :<Register />}>
           
         </Route>
 
