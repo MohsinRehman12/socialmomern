@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./Home.css"
 import HomeIcon from '@mui/icons-material/Home';
 import Navbar from '../../components/navbar/Navbar';
@@ -6,7 +6,10 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Feed from '../../components/feed/Feed';
 import Rightbar from '../../components/rightbar/Rightbar';
 
-export default function home() {
+export default function Home() {
+
+
+  
   return (
     <>
       <Navbar/>

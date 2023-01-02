@@ -3,6 +3,7 @@ import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Profile from "./pages/profile/Profile"
 import Login from "./pages/Login/Login";
+import Messenger from "./pages/messenger/Messenger";
 import Register from "./pages/Register/Register"
 import React, { useContext } from "react";
 import { createRoot } from "react-dom/client";
@@ -34,7 +35,11 @@ function App() {
           
         </Route>
 
-        <Route exact path="/profile/:username" element={<Profile/>}>
+        <Route exact path="/messenger" element={!user ? <Navigate to="/" /> :<Messenger />}>
+          
+        </Route>
+
+        <Route exact path="/profile/:username" element={!user ? <Navigate to="/" /> :<Profile />}>
 
         </Route>
 

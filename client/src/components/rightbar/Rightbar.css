@@ -110,3 +110,23 @@
     object-fit: cover;
     border-radius: 5px;
   }
+
+  .rightbarFollow{
+    margin-top: 30;
+    margin-bottom: 10px;
+    border: none;
+    color: black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    font-style: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .rightbarFollow:hover{
+    background-color: #272727;
+    color: white;
+    transition: ease-in-out 0.5s;
+  }

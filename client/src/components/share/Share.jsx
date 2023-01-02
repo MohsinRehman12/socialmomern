@@ -17,11 +17,11 @@ export default function Share() {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    console.log('post user id', user._id.$oid)
+    console.log('post user id', user._id)
     console.log('desc', desc.current.value)
 
     const newPost = {
-      userId: user._id.$oid,
+      userId: user._id,
       desc: desc.current.value
     }
 

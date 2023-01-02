@@ -19,8 +19,8 @@ export default function Post({post}) {
   const {user:currentUser} = useContext(AuthContext) //use nickname currentuser
 
   useEffect (()=>{
-    setIsLiked(post.likes.includes(currentUser._id.$oid))
-  }, [currentUser._id.$oid,post.likes])
+    setIsLiked(post.likes.includes(currentUser._id))
+  }, [currentUser._id,post.likes])
 
   const likeHandler = () =>{
 
@@ -28,9 +28,9 @@ export default function Post({post}) {
 
     try {
     Axios.put ("/posts/"+post._id+"/like",  
-    {userId:currentUser._id.$oid})
+    {userId:currentUser._id})
 
-    console.log('id is', currentUser._id.$oid)
+    console.log('id is', currentUser._id)
     } catch (error) {
       console.log(error)
     }
@@ -46,7 +46,7 @@ export default function Post({post}) {
     }
 
     fetchUser().then(response => {
-      console.log(response);
+      console.log('a',response);
   }).catch(e => {
       console.log(e);
   });

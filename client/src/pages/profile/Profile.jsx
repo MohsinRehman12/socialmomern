@@ -4,9 +4,11 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Feed from '../../components/feed/Feed';
 import Rightbar from '../../components/rightbar/Rightbar';
 import "./Profile.css"
-import  { useState, useEffect } from 'react'
+import  { useState, useEffect, useContext } from 'react'
 import Axios from "axios";
-import { useParams } from "react-router";
+import { useNavigate , useParams } from "react-router";
+import { AuthContext } from '../../context/AuthContext';
+
 
 
 export default function Profile() {
@@ -16,7 +18,25 @@ export default function Profile() {
   console.log(params)
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
+  const {user:currentUser} = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  if(currentUser==null){
+    navigate('/')
+  }
+
+  const handleClick = () =>{
+
+    localStorage.removeItem("user")
+    
+    window.location.reload(false)
+
+  } 
+
+  
+
+  
+  
   useEffect(()=>{
     
     const fetchUser= async () =>{
@@ -24,12 +44,13 @@ export default function Profile() {
       setUser(res.data)
     }
 
+
     fetchUser().then(response => {
       console.log(response);
   }).catch(e => {
       console.log(e);
   });
-  },[user])
+  },[params.username])
 
   return (
     <>
@@ -46,6 +67,8 @@ export default function Profile() {
           <div className="profileInfo">
             <h4 className="profileName">{user.username}</h4>
             <p className="profileDesc">{user.desc}</p>
+            {params.username === currentUser.username ? 
+            <button className='Logout' onClick={handleClick}> Logout </button> : null}
 
           </div>
         </div>

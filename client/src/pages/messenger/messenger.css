@@ -1,0 +1,73 @@
+.messenger{
+    height: calc(100vh - 70px);
+    display: flex;
+
+}
+
+.chatMenu{
+    flex: 3.5;
+}
+
+.chatBox{
+    flex: 5.5;
+}
+
+.chatOnline{
+    flex: 3;
+}
+
+.chatBoxWrapper{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.chatBoxTop{
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 10px;
+    
+}
+.chatMenuWrapper,.chatBoxWrapper,.chatOnlineWrapper{
+    padding: 10px;
+    height: 100%;
+}
+
+.chatMenuInput{
+    width: 90%;
+    padding: 10px, 0px;
+    border: none;
+    border-bottom: 1px solid gray;
+}
+
+.chatBoxBottom{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.messageBoxInput{
+    width: 80%;
+    height: 90px;
+    padding: 10px;
+}
+
+.messageSendButton{
+    width: 70px;
+    margin-left: 5px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgb(111, 15, 111);
+    color: white;
+}
+
+.noConvoText{
+    position: absolute;
+    top: 20%;
+    font-size: 35px;
+    color: #616161;
+    text-align: center;
+}

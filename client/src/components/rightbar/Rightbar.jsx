@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import "./Rightbar.css"
-import {CakeOutlined} from "@mui/icons-material"
+import {CakeOutlined, Add, Remove} from "@mui/icons-material"
 import {Users} from "../../testData"
 import Online from "../online/Online"
 import Axios from 'axios'
@@ -13,6 +13,11 @@ export default function Rightbar({ user }) {
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [friends, setFriends] = useState([])
+  const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
+
+  console.log('current followed', followed)
+
+  
 
 
   useEffect(()=>{
@@ -33,7 +38,30 @@ export default function Rightbar({ user }) {
     
     //get around async not being used in useEffect by creating a async function and then calling it
     getFollowers(); 
-  },[user._id])
+  },[user])
+
+  const handleClick = async () =>{
+    try {
+      console.log('user id click',user._id)
+      console.log('other id',currentUser._id.$oid)
+
+      if(followed){
+        await Axios.put(`/users/${user._id}/unfollow`, {userId:currentUser._id})
+        dispatch({type:"UNFOLLOW", payload:user._id})
+      }
+      else{
+        await Axios.put(`/users/${user._id}/follow`, {userId:currentUser._id})
+        dispatch({type:"FOLLOW", payload:user._id})
+
+      }
+      setFollowed(!followed)
+      console.log('current followed', followed)
+
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   const HomeRightbar = () =>{
     return(
@@ -61,6 +89,14 @@ export default function Rightbar({ user }) {
   const ProfileRightBar =() => {
     return(
       <>
+      {user.username !== currentUser.username && (
+        <button className="rightbarFollow"
+         onClick={handleClick}>
+          {followed ? "Unfollow" : "Follow"}
+          {followed ? <Remove /> : <Add></Add>}
+
+        </button>
+      )}
         <div className="rightbarInfo">
         <h4 className="rightbarTitle">User information</h4>
           <div className="rightbarInfoItem">

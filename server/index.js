@@ -6,6 +6,10 @@ const morgan = require("morgan")
 const userRoute= require("./routes/users")
 const authRoute= require("./routes/auth")
 const postRoute= require("./routes/posts")
+const convoRoute= require("./routes/convo")
+const messageRoute= require("./routes/messages")
+
+const router = express.Router();
 const multer = require("multer")
 var cors = require('cors')
 const path = require('path')
@@ -57,6 +61,10 @@ app.post("/api/upload", upload.single("file"), (req,res)=>{
 app.use("/api/users" , userRoute)
 app.use("/api/auth" , authRoute)
 app.use("/api/posts" , postRoute)
+app.use("/api/convo" , convoRoute)
+app.use("/api/message" , messageRoute)
+
+
 
 
 
