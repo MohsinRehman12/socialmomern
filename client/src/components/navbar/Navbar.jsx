@@ -1,26 +1,49 @@
 import React, { useContext } from 'react'
 import "./Navbar.css"
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 import {Search, Person, Chat, Notifications} from '@mui/icons-material';
 import {AuthContext} from "../../context/AuthContext"
+import { useState } from 'react';
+import Axios from 'axios';
 export default function Navbar() {
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const {user} = useContext(AuthContext);
+  const [seachUser, setSearchUser] = useState("")
+  const [searchResults, setSearchResults] = useState([])
+  const navigate = useNavigate();
+  const handleSubmit = async(e) =>{
+
+    try {
+      const res = await Axios.get("/users/getUA/" + seachUser)
+      setSearchResults(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+
+    navigate("/search", {state:{searchResults}})
+
+  }
+
   return (
+    // <form>
     <div className="navbarContainer">
       <div className="navbarLeft">
       <Link to="/" className='linkTo'>
         <span className="logo">SocialMo</span>
       </Link>
       </div>
+      
 
       <div className="navbarCenter">
-
         <div className="searchbar">
           <Search className='searchicon'/>
-          <input type="text" placeholder = "Search" className="searchInput" />
+          <input type="text" 
+          placeholder = "Search" 
+          className="searchInput" 
+          onChange={(e)=>setSearchUser(e.target.value)}
+          />
 
         </div>
 
@@ -28,11 +51,12 @@ export default function Navbar() {
 
       <div className="navbarRight">
           <div className="navbarLinks">
-            <span className="navbarLink">Home</span>
-            <span className="navbarLink">Feed</span>
 
+            <button className="navbarLink"
+            onClick={handleSubmit}
+            >Search</button>
           </div>
-
+        
           <div className="navbarIcons">
             <div className="navbarIconItem">
               <Person/>
@@ -54,9 +78,10 @@ export default function Navbar() {
       </div>
       <Link to={`/profile/${user.username}`}>
 
-      <img src={user.profilePicture ? PublicFolder+user.profilePicture : PublicFolder +"pfp/pfp1.jpg"} alt="boof" className="navbarImg" />
+      <img src={user.profilePicture ? PublicFolder + user.profilePicture : PublicFolder+"pfp/pfp1.jpg"} alt="boof" className="navbarImg" />
       
       </Link>
     </div>
+    // </form>
   )
 }

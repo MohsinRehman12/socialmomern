@@ -80,7 +80,6 @@ export default function Post({post}) {
         }
     }
     getComments();
-    console.log(comments)
   }, [openComments])
   
   const handleSubmit = async (e) => {
@@ -101,8 +100,6 @@ export default function Post({post}) {
         console.log(error)
     }
   }
-
-  console.log(currentUser._id)
 
   return (
     <div className='post'>

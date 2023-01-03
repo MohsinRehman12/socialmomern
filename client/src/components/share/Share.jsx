@@ -17,9 +17,6 @@ export default function Share() {
   const submitHandler = async (e) => {
     e.preventDefault()
 
-    console.log('post user id', user._id)
-    console.log('desc', desc.current.value)
-
     const newPost = {
       userId: user._id,
       desc: desc.current.value
@@ -72,7 +69,7 @@ export default function Share() {
           <label htmlFor='file' className="shareOptions">
               <PermMedia htmlColor = "red" className='shareIcon' />
             <div className="shareOption">
-              <span className="shareOptionText">photo or video</span>
+              <span className="shareOptionText">Upload a Photo</span>
               <input
               style={{display:"none"}} 
               type="file" 
@@ -82,26 +79,6 @@ export default function Share() {
             </div>
           </label>
 
-          <div className="shareOptions">
-              <Label htmlColor = "orange" className='shareIcon' />
-            <div className="shareOption">
-              <span className="shareOptionText">Tag</span>
-            </div>
-          </div>
-
-          <div className="shareOptions">
-              <Room htmlColor = "blue" className='shareIcon' />
-            <div className="shareOption">
-              <span className="shareOptionText">Locaion</span>
-            </div>
-          </div>
-
-          <div className="shareOptions">
-              <EmojiEmotions htmlColor='gold' className='shareIcon' />
-            <div className="shareOption">
-              <span className="shareOptionText">Mood</span>
-            </div>
-          </div>
           <button className="shareButton" type='submit'>
             Share
           </button>

@@ -14,11 +14,11 @@
 }
 
 .navbarCenter{
-    flex: 6;
+    flex: 5;
 }
 
 .navbarRight{
-    flex: 3;
+    flex: 4;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -71,8 +71,18 @@
 
 .navbarLink{
     margin-left: 10px;
-    font-size: 15px;
+    font-size: 13px;
     cursor: pointer;
+    background-color: #272727;
+    color: white;
+    border: white 2px solid;
+    border-radius: 5px;
+}
+
+.navbarLink:hover{
+    background-color: white;
+    color: #272727;
+    transition: 0.5s ease-out;
 }
 
 .navbarIconItem{

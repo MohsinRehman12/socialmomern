@@ -172,8 +172,80 @@ router.put("/:id/unfollow", async (req,res)=>{
 
 })
 
-//get name
+//get by email
 
+router.get("/checkE/:email", async (req,res) =>{
+    try {
+
+        const checkForEmail = await User.findOne({ email: req.params.email });
+
+        if(checkForEmail){
+            return res.status(409).json("Email in use");
+  
+        }
+
+        else {
+            return res.status(200).json()
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+
+router.get("/checkU/:username", async (req,res) =>{
+    try {
+
+        const checkForUsername = await User.findOne({ username: req.params.username });
+
+        if(checkForUsername){
+            return res.status(409).json("username is already taken");
+  
+        }
+
+        else {
+            return res.status(200).json()
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+router.get("/getU/:username", async (req,res) =>{
+    try {
+
+        const checkForUsername = await User.find({ username: req.params.username });
+
+        if(checkForUsername){
+            return res.status(200).json(checkForUsername)
+  
+        }
+
+        else {
+            return res.status(404).json("No users Found")
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+router.get("/getUA/:username", async (req,res) =>{
+    try {
+
+        const checkForUsername = await User.find({ username:  { $regex: req.params.username } });
+
+        if(checkForUsername){
+            return res.status(200).json(checkForUsername)
+  
+        }
+
+        else {
+            return res.status(404).json("No users Found")
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
 
 
 module.exports = router

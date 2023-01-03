@@ -6,6 +6,7 @@ import Online from "../online/Online"
 import Axios from 'axios'
 import { AuthContext } from "../../context/AuthContext";
 import {Link} from "react-router-dom"
+import { useNavigate } from 'react-router-dom'
 
 
 export default function Rightbar({ user }) {
@@ -15,13 +16,12 @@ export default function Rightbar({ user }) {
   const [friends, setFriends] = useState([])
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
 
-  console.log('current followed', followed)
-
+  const navigate = useNavigate();
   
 
 
   useEffect(()=>{
-
+    setFollowed(currentUser.followings.includes(user?._id))
     const getFollowers = async () =>{
       try {
 
@@ -43,8 +43,6 @@ export default function Rightbar({ user }) {
   const handleClick = async () =>{
     try {
       console.log('user id click',user._id)
-      console.log('other id',currentUser._id.$oid)
-
       if(followed){
         await Axios.put(`/users/${user._id}/unfollow`, {userId:currentUser._id})
         dispatch({type:"UNFOLLOW", payload:user._id})
@@ -54,12 +52,29 @@ export default function Rightbar({ user }) {
         dispatch({type:"FOLLOW", payload:user._id})
 
       }
+      
       setFollowed(!followed)
       console.log('current followed', followed)
 
     } catch (error) {
       console.log(error)
     }
+
+  }
+
+  const handleClickMessage= async ()=>{
+
+    try {
+      const res = await Axios.post('/convo', {
+        senderId:currentUser._id,
+        recieverId:user._id
+      });
+    } catch (error) {
+      console.log(error)
+    }
+
+    navigate("/messenger")
+
 
   }
 
@@ -90,12 +105,18 @@ export default function Rightbar({ user }) {
     return(
       <>
       {user.username !== currentUser.username && (
+        <>
         <button className="rightbarFollow"
          onClick={handleClick}>
           {followed ? "Unfollow" : "Follow"}
           {followed ? <Remove /> : <Add></Add>}
-
         </button>
+        {followed? 
+        <button onClick={handleClickMessage} className='rightbarFollow'>
+          Message 
+        </button>
+        : null}
+        </>
       )}
         <div className="rightbarInfo">
         <h4 className="rightbarTitle">User information</h4>
@@ -107,12 +128,19 @@ export default function Rightbar({ user }) {
             <span className="rightbarInfoKey">From:</span>
             <span className="rightbarInfoValue">{user.from}</span>
           </div>
+        {user.birthday ?
+          <div className="rightbarInfoItem">
+            <span className="rightbarInfoKey">Birthday:</span>
+            <span className="rightbarInfoValue">{(user.birthday)}</span>
+          </div>
+        : null}
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Relationship:</span>
-            <span className="rightbarInfoValue">{user.relationship ===1 ? 
-            "Single"
+            <span className="rightbarInfoValue">{user.relationship ===4 ? 
+            "Complicated"
             : user.relationship ===2 ? "Married"
-            : user.relationship ===3 ? "Engaged": "Complicated"
+            : user.relationship ===3 ? "Engaged": "Single"
+
             }</span>
           </div>
         <h4 className="rightbarTitle">User friends</h4>

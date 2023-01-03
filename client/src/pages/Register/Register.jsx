@@ -11,6 +11,7 @@ import {
   MDBInput
 }
 from 'mdb-react-ui-kit';
+import "./Register.css"
 
 import Axios from "axios";
 
@@ -22,23 +23,31 @@ function App() {
   const email = useRef();
   const password = useRef();
   const passwordAgain = useRef();
+  const firstName = useRef();
+  const lastName = useRef();
+
   const navigate = useNavigate();
 
-  const [registerStatus, setRegisterStatus] = useState('Sign Up')
+  const [registerStatus, setRegisterStatus] = useState('')
+  const [passwordStatus, setPasswordStatus] = useState('')
 
   const handleClick = async (e) =>{
     
     e.preventDefault();
 
     if(passwordAgain.current.value !== password.current.value){
-      password.current.setCustomValidity("Passwords do not match")
+      setPasswordStatus("Passwords Dont Match")
     }
+
     else{
+      setPasswordStatus("")
+
       const user = {
         username: username.current.value,
         email: email.current.value,
-        password: password.current.value
-        
+        password: password.current.value,
+        firstName: firstName.current.value,
+        lastName: lastName.current.value
       }
       try {
         const res = 
@@ -50,6 +59,10 @@ function App() {
           setRegisterStatus("Email is in use please enter another")
         }
 
+        if ((error.message).includes("410")){
+          setRegisterStatus("Username is already taken please choose")
+        }
+
         if ((error.message).includes("500")){
           setRegisterStatus("An error has occured with the server please refresh the page")
         }
@@ -59,6 +72,7 @@ function App() {
    
 
   }
+  
   return (
     <MDBContainer className="my-5">
 
@@ -77,7 +91,7 @@ function App() {
                 <span className="h1 fw-bold mb-0">Join Now To Socialize Globally</span>
               </div>
 
-              <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>{registerStatus}</h5>
+              <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>Sign Up</h5>
 
                 <MDBInput 
                 wrapperClass='mb-4' 
@@ -96,6 +110,35 @@ function App() {
                 required type='email' 
                 size="lg"/>
 
+              <div className="nameBox">
+              <MDBInput 
+                className='nameInput'
+                wrapperClass='mb-4' 
+                label='Enter First Name ' 
+                ref = {firstName} 
+                required 
+                id='firstName' 
+                type='text' 
+                size="lg"
+                minLength="1"
+                />
+
+                <MDBInput 
+                className='nameInput'
+                wrapperClass='mb-4' 
+                label='Enter Last Name ' 
+                ref = {lastName} 
+                required 
+                id='lastName' 
+                type='text' 
+                size="lg"
+                minLength="1"
+                />
+
+
+              </div>
+                
+                <p className='passwordStatusText'>{passwordStatus}</p>
                 <MDBInput 
                 wrapperClass='mb-4' 
                 label='Password' 
@@ -118,6 +161,7 @@ function App() {
                 minLength="6"
                 />
 
+              <p className='passwordStatusText'>{registerStatus}</p>
 
               <MDBBtn className="mb-4 px-5" color='dark' size='lg' onSubmit={handleClick}>Register</MDBBtn>
 

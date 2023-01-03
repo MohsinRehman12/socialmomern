@@ -67,3 +67,8 @@
     color: white;
     transition: ease-in-out 0.5s;
   }
+
+  .profileRealName{
+    font-weight: 300;
+    font-size: 20px;
+  }

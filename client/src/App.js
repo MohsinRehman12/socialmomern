@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login";
 import Messenger from "./pages/messenger/Messenger";
 import Register from "./pages/Register/Register"
 import React, { useContext } from "react";
+import Edit from "./pages/edit/Edit"
 import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
@@ -14,6 +15,7 @@ import {
   Navigate
 } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
+import FindUser from "./pages/findUsers/FindUser";
 
 
 
@@ -40,6 +42,14 @@ function App() {
         </Route>
 
         <Route exact path="/profile/:username" element={!user ? <Navigate to="/" /> :<Profile />}>
+
+        </Route>
+
+        <Route exact path="/edit" element={!user ? <Navigate to="/" /> :<Edit />}>
+
+        </Route>
+
+        <Route exact path="/search" element={!user ? <Navigate to="/" /> :<FindUser/>}>
 
         </Route>
 

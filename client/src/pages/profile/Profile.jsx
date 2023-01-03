@@ -29,11 +29,13 @@ export default function Profile() {
 
   const handleClick = () =>{
 
-    localStorage.removeItem("user")
+      localStorage.removeItem("user")
     
-    window.location.reload(false)
+      window.location.reload(false)
+    
 
-  } 
+} 
+
 
   
 
@@ -54,6 +56,7 @@ export default function Profile() {
   });
   },[params.username])
 
+  
   return (
     <>
     
@@ -63,16 +66,20 @@ export default function Profile() {
       <div className="profileRight">
         <div className="profileRightTop">
           <div className="profileCover">
-            <img src={user.coverImg ? PublicFolder+user.coverImg : PublicFolder+"cover/cover1.jpg"} className='profileCoverImg' />
+            <img src={user.coverPicture ? PublicFolder+user.coverPicture : PublicFolder+"cover/cover1.jpg"} className='profileCoverImg' />
             <img src={user.profilePicture ? PublicFolder+user.profilePicture : PublicFolder+"pfp/pfp1.jpg"} className='profilePfpImg' />
           </div>
           <div className="profileInfo">
             <h4 className="profileName">{user.username}</h4>
+            {user.firstName?
+            <h4 className="profileRealName">Full Name: {user?.firstName} {user?.lastName}</h4>
+            : null}
+
             <p className="profileDesc">{user.desc}</p>
             {params.username === currentUser.username ? 
             <>
               <button className='Logout' onClick={handleClick}> Logout </button>
-              <button className='ProfileButton'  onClick={handleClick}> Profile </button>
+              <a href='../edit'><button className='ProfileButton'> Edit </button></a>
               
             </>
             :null}

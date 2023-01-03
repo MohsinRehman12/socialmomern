@@ -1,0 +1,15 @@
+.nameBox{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 0;
+}
+
+.form-control.form-control-lg.nameInput{
+
+    max-width: 250px;
+    min-width: 200px;
+}
+
+.passwordStatusText{
+    color: tomato;
+}

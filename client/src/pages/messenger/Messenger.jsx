@@ -30,6 +30,8 @@ export default function Messenger() {
   const scrollRef = useRef();
   const socket = useRef()
 
+  
+
 //useEffect for connecting the socket
 //and getting getting a message if the other users sends one
   useEffect(()=>{
@@ -146,36 +148,13 @@ export default function Messenger() {
 
 
 //     useEffect for search
-useEffect(()=>{
-    let followingUser = user.followings;
 
-    const getUser = async(fid) => {
+  // useEffect(() =>{
+  //   let results = convo.filter(x => x.username.toLowerCase().includes(search.toLowerCase()))
+  //   console.log(results)
+  // },[search])
 
-      try {
-        const res = await Axios("/users?userId="+fid)
-        setUsersArr(current => [...current, res.data])
-
-
-      } catch (error) {
-        console.log(error)
-      }
-
-
-    }
-
-    followingUser.forEach(user => {
-        getUser(user);
-    });
-
-    // let results = usersArr.filter(x => x.username.toLowerCase().includes(search.toLowerCase()));
-
-
-
-  }, [])
-
-  console.log(usersArr.username)
-  
-
+  console.log("a", usersArr)
   return (
 <>
     <Navbar /> 

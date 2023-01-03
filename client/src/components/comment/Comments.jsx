@@ -28,7 +28,7 @@ export default function Comment({comments}) {
       <div className="userInfoContainer">
       <img 
       className="commentPfpImg"
-      src={ PublicFolder+"pfp/pfp1.jpg"}
+      src={user.profilePicture ? PublicFolder + user.profilePicture : PublicFolder+"pfp/pfp1.jpg"}
       >
       </img>
 

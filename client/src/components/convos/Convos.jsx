@@ -28,7 +28,7 @@ export default function Convos({convo, currentUser}) {
     }, [currentUser, convo])
   return (
     <div className='convo'>
-        <img src={user?.profilepicture ? PublicFolder+user?.profilepicture : PublicFolder+"pfp/pfp1.jpg"} alt="" className="convoImg" />
+        <img src={user?.profilePicture ? PublicFolder+user?.profilePicture : PublicFolder+"pfp/pfp1.jpg"} alt="" className="convoImg" />
         <span className="convoName">{user.username}</span>
     </div>
   )

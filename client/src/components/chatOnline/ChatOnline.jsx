@@ -13,7 +13,17 @@ export default function ChatOnline({onlineUsers, currentId, setCurrentChat}) {
         const res = await Axios.get(`/convo/find/${currentId}/${user._id}`);
         setCurrentChat(res.data);
       } catch (error) {
-        
+        if ((error.message).includes("404")){
+          try {
+            const res = await Axios.post('/convo', {
+              senderId:currentId,
+              recieverId:user._id
+            });
+
+          } catch (error) {
+            console.log(error)
+          }
+        }
       }
     }
     useEffect(()=>{

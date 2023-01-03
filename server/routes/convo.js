@@ -10,8 +10,20 @@ router.post("/", async (req,res)=>{
     });
 
     try {
-        const savedConvo = await newConvo.save();
-        res.status(200).json(savedConvo)
+
+        const checkConvos = await Convo.findOne({
+            members: { $all:[req.body.senderId, req.body.recieverId] },
+
+        }) 
+
+        if(checkConvos){
+            return res.status(403).json("convo already exists");
+        } else{
+            const savedConvo = await newConvo.save();
+            return res.status(200).json(savedConvo)
+        }
+
+
     } catch (error) {
         res.status(500).json(error)
     }
@@ -44,7 +56,16 @@ router.get("/find/:firstUserId/:secondUserId", async (req,res)=> {
 
         })
 
-        res.status(200).json(convo)
+        if(convo){
+            res.status(200).json(convo)
+
+        }
+
+        else{
+            res.status(404).json("convo doesnt exist")
+
+        }
+
 
         
     } catch (error) {

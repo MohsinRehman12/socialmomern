@@ -13,16 +13,26 @@ router.post("/register", async (req,res) => {
         const hashedPass = await bcrypt.hash(req.body.password,salt)
 
         const checkForEmail = await User.findOne({ email: req.body.email });
+        const checkForUser = await User.findOne({ username: req.body.username });
 
         if(checkForEmail){
           return res.status(409).json("Email in use");
 
-        } else{
+        } 
+
+        if(checkForUser){
+          return res.status(410).json("Email in use");
+
+        } 
+        
+        else{
 
         //create user
         const newUser = new User({
           username: req.body.username,
           email: req.body.email,
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
           password: hashedPass,
         });
 

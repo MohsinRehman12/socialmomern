@@ -24,6 +24,11 @@ const UserSchema = new mongoose.Schema({
         default:"",
     },
 
+    coverPicture: {
+        type:String,
+        default:"",
+    },
+
     followers: {
         type:Array,
         default:[],
@@ -55,6 +60,20 @@ const UserSchema = new mongoose.Schema({
     relationship:{
         type: Number,
         enum: [1, 2, 3, 4],
+    },
+
+    firstName:{
+        type: String,
+        max: 30,
+    },
+
+    lastName:{
+        type: String,
+        max: 30,
+    },
+
+    birthday:{
+        type: String,
     }
     
 },
