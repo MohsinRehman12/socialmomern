@@ -8,6 +8,7 @@ const authRoute= require("./routes/auth")
 const postRoute= require("./routes/posts")
 const convoRoute= require("./routes/convo")
 const messageRoute= require("./routes/messages")
+const commentRoute= require("./routes/comment")
 
 const router = express.Router();
 const multer = require("multer")
@@ -63,6 +64,7 @@ app.use("/api/auth" , authRoute)
 app.use("/api/posts" , postRoute)
 app.use("/api/convo" , convoRoute)
 app.use("/api/message" , messageRoute)
+app.use("/api/comment" , commentRoute)
 
 
 

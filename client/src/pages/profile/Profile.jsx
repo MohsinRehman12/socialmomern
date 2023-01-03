@@ -21,6 +21,8 @@ export default function Profile() {
   const {user:currentUser} = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [buttonType, setButtonType] = useState('');
+
   if(currentUser==null){
     navigate('/')
   }
@@ -63,12 +65,17 @@ export default function Profile() {
           <div className="profileCover">
             <img src={user.coverImg ? PublicFolder+user.coverImg : PublicFolder+"cover/cover1.jpg"} className='profileCoverImg' />
             <img src={user.profilePicture ? PublicFolder+user.profilePicture : PublicFolder+"pfp/pfp1.jpg"} className='profilePfpImg' />
-          </div>``
+          </div>
           <div className="profileInfo">
             <h4 className="profileName">{user.username}</h4>
             <p className="profileDesc">{user.desc}</p>
             {params.username === currentUser.username ? 
-            <button className='Logout' onClick={handleClick}> Logout </button> : null}
+            <>
+              <button className='Logout' onClick={handleClick}> Logout </button>
+              <button className='ProfileButton'  onClick={handleClick}> Profile </button>
+              
+            </>
+            :null}
 
           </div>
         </div>

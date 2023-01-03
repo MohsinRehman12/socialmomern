@@ -48,7 +48,7 @@
     font-weight: 300;
 }
 
-.Logout{
+.Logout, .ProfileButton{
     margin-top: 30;
     margin-bottom: 10px;
     border: none;
@@ -62,7 +62,7 @@
     cursor: pointer;
   }
 
-  .Logout:hover{
+  .Logout:hover, .ProfileButton:hover{
     background-color: #272727;
     color: white;
     transition: ease-in-out 0.5s;

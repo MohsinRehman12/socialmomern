@@ -55,7 +55,7 @@ router.delete("/:id", async (req,res)=>{ //allows us to use any uID
 
 router.get("/", async(req,res)=>{
     const userId = req.query.userId;
-    const username = req.query.username;
+  const username = req.query.username;
 
     try {
 
@@ -171,5 +171,9 @@ router.put("/:id/unfollow", async (req,res)=>{
     }
 
 })
+
+//get name
+
+
 
 module.exports = router

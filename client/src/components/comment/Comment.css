@@ -1,0 +1,28 @@
+.commentPfpImg{
+    height: 24px;
+    width: 24px;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+
+.commentText{
+    font-size: 15px;
+    font-weight: 300;
+    word-break:break-word;
+    line-height: 1;
+    margin-top: 10px;
+    margin-right: 30px;
+
+
+}
+
+.commentUserName{
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.userInfoContainer{
+    display: flex;
+    align-items: center;
+}

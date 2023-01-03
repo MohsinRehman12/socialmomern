@@ -23,6 +23,8 @@ export default function Messenger() {
   const [onlineUsers, setOnlineUsers] = useState(null);
   const [convosFound, setConvosFound] = useState([])
   const [search, setSearch] = useState("")
+  const [usersArr, setUsersArr] = useState("")
+
 
 
   const scrollRef = useRef();
@@ -143,14 +145,36 @@ export default function Messenger() {
   },[messages])
 
 
-    //useEffect for search
-//   useEffect(()=>{
-//     let searchResults = convo.filter(x => x)
-//   },[search])
+//     useEffect for search
+useEffect(()=>{
+    let followingUser = user.followings;
+
+    const getUser = async(fid) => {
+
+      try {
+        const res = await Axios("/users?userId="+fid)
+        setUsersArr(current => [...current, res.data])
+
+
+      } catch (error) {
+        console.log(error)
+      }
+
+
+    }
+
+    followingUser.forEach(user => {
+        getUser(user);
+    });
+
+    // let results = usersArr.filter(x => x.username.toLowerCase().includes(search.toLowerCase()));
 
 
 
+  }, [])
 
+  console.log(usersArr.username)
+  
 
   return (
 <>
