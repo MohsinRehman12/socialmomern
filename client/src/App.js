@@ -5,7 +5,7 @@ import Profile from "./pages/profile/Profile"
 import Login from "./pages/Login/Login";
 import Messenger from "./pages/messenger/Messenger";
 import Register from "./pages/Register/Register"
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Edit from "./pages/edit/Edit"
 import { createRoot } from "react-dom/client";
 import {
@@ -16,17 +16,32 @@ import {
 } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import FindUser from "./pages/findUsers/FindUser";
+import {io} from 'socket.io-client'
 
 
 
-function App() {
+const App = () => {
 
   const {user} = useContext(AuthContext)
+
+  const [socket, setSocket] = useState(null)
+
+  useEffect(()=>{
+    setSocket(io("ws://localhost:8900"));
+  },[])
+
+
+  useEffect(()=>{
+    socket?.emit("addUser", user?._id)
+
+  },[socket,user])
    
+  console.log('socket',socket)
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={user ? <Home/> : <Register/>}>
+        <Route exact path="/"  element={user ? <Home socket={socket}></Home> : <Register/>}>
 
         </Route>
 
@@ -37,7 +52,7 @@ function App() {
           
         </Route>
 
-        <Route exact path="/messenger" element={!user ? <Navigate to="/" /> :<Messenger />}>
+        <Route exact path="/messenger"  element={!user ? <Navigate to="/" /> :<Messenger sockets={socket} ></Messenger>}>
           
         </Route>
 

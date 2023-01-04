@@ -1,5 +1,6 @@
 .profile{
     display: flex;
+    background-color: whitesmoke;
 }
 
 .profileRight{
@@ -48,7 +49,7 @@
     font-weight: 300;
 }
 
-.Logout, .ProfileButton{
+.LogoutButton, .ProfileButton{
     margin-top: 30;
     margin-bottom: 10px;
     border: none;
@@ -60,12 +61,19 @@
     font-style: 16px;
     font-weight: 500;
     cursor: pointer;
+    border: 1px solid black;
+    background-color: whitesmoke;
   }
 
-  .Logout:hover, .ProfileButton:hover{
+  .LogoutButton:hover, .ProfileButton:hover{
     background-color: #272727;
     color: white;
     transition: ease-in-out 0.5s;
+  }
+
+  .accountIcons{
+    margin-left: 10px;
+
   }
 
   .profileRealName{

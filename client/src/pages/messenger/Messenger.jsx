@@ -10,8 +10,7 @@ import "./messenger.css"
 import Axios from "axios"
 import { useRef } from 'react'
 import {io} from 'socket.io-client'
-
-export default function Messenger() {
+const Messenger = ({ sockets} ) => {
 
   const {user} = useContext(AuthContext)
 
@@ -25,26 +24,26 @@ export default function Messenger() {
   const [search, setSearch] = useState("")
   const [usersArr, setUsersArr] = useState("")
 
-
+  // const socket=useContext(SocketContext)
 
   const scrollRef = useRef();
-  const socket = useRef()
-
+  // const socket = useRef()
   
 
 //useEffect for connecting the socket
 //and getting getting a message if the other users sends one
   useEffect(()=>{
 
-    socket.current = io("ws://localhost:8900")
+    // socket.current = io("ws://localhost:8900")
 
-    socket.current.on("getMessage", (data) =>{
+    sockets?.on("getMessage", (data) =>{
         setArrivalMessage({
             sender:data.senderId ,
             text: data.text,
             createdAt: Date.now(),
         })
     })
+
 
   },[])
 
@@ -60,9 +59,10 @@ export default function Messenger() {
 //useEffect for adding and removing people from the socket
 
   useEffect(()=>{
-    socket.current.emit("addUser", user._id)
+    sockets?.emit("addUser", user._id)
+    sockets?.emit("getUser")
 
-    socket.current.on("getUsers", (users)=>{
+    sockets?.on("getUsers", (users)=>{
         setOnlineUsers(user.followings.filter(f=>users.some(u=>u.userId === f)))
     })
 
@@ -122,7 +122,7 @@ export default function Messenger() {
     const recieverId = currentChat.members.find
     ((member)=> member !== user._id);
     
-    socket.current.emit("sendMessage",{
+    sockets?.emit("sendMessage",{
         senderId: user._id,
         recieverId : recieverId,
         text: newMessage
@@ -154,7 +154,7 @@ export default function Messenger() {
   //   console.log(results)
   // },[search])
 
-  console.log("a", usersArr)
+  console.log("a", sockets)
   return (
 <>
     <Navbar /> 
@@ -230,3 +230,4 @@ export default function Messenger() {
 </>
   )
 }
+export default Messenger;

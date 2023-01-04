@@ -1,23 +1,40 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import "./Rightbar.css"
-import {CakeOutlined, Add, Remove} from "@mui/icons-material"
+import { PersonAddAltOutlined, PersonRemoveOutlined} from "@mui/icons-material"
 import {Users} from "../../testData"
 import Online from "../online/Online"
 import Axios from 'axios'
 import { AuthContext } from "../../context/AuthContext";
 import {Link} from "react-router-dom"
 import { useNavigate } from 'react-router-dom'
+import {io} from 'socket.io-client'
 
 
-export default function Rightbar({ user }) {
+const Rightbar=({ user, socket })=> {
 
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [friends, setFriends] = useState([])
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
-
+  const [onlineUsers, setOnlineUsers] = useState([]);
+  // const socket= useContext(SocketContext);
   const navigate = useNavigate();
-  
+
+  // useEffect(()=>{
+
+  //   socket.current = io("ws://localhost:8900")
+
+  // }, [])
+
+  useEffect(()=>{
+    socket?.emit("addUser", currentUser._id)
+
+    socket?.on("getUsers", (users)=>{
+        setOnlineUsers(currentUser.followings.filter(f=>users.some(u=>u.userId === f)))
+    })
+
+  }, [user])
+
 
 
   useEffect(()=>{
@@ -78,20 +95,17 @@ export default function Rightbar({ user }) {
 
   }
 
+  
+
+
   const HomeRightbar = () =>{
     return(
       <>
       <div className='rightbar'>
       <div className="rightbarWrapper">
-        <div className="birthdayContainer">
-          <CakeOutlined className='birthdayIcons' htmlColor='orange' />
-          <span className="birthdayText"> <b>Person</b> Has a birthday today along with <b> 3 others</b> </span>
-
-        </div>
-        <img className='rightBarAd' src='/pfp/pfp1.jpg' alt='ad' />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map(u=>(
+          {onlineUsers.map(u=>(
               <Online key={u.id} user={u}/>
           ))}
         </ul>
@@ -109,7 +123,7 @@ export default function Rightbar({ user }) {
         <button className="rightbarFollow"
          onClick={handleClick}>
           {followed ? "Unfollow" : "Follow"}
-          {followed ? <Remove /> : <Add></Add>}
+          {followed ? <PersonRemoveOutlined /> : <PersonAddAltOutlined></PersonAddAltOutlined>}
         </button>
         {followed? 
         <button onClick={handleClickMessage} className='rightbarFollow'>
@@ -147,7 +161,7 @@ export default function Rightbar({ user }) {
         <div className="rightbarFollowings">
         {friends.map((friend)=>(
         
-        <Link to={"/profile/"+friend.username} style={{textDecoration: "none"}}>
+        <Link to={"/profile/"+friend.username} className="userFollowingsLink" style={{textDecoration: "none"}}>
 
           <div className="rightbarFollowing">
 
@@ -182,3 +196,4 @@ export default function Rightbar({ user }) {
       
   )
 }
+export default  Rightbar;

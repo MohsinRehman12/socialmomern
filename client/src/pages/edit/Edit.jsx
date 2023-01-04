@@ -31,106 +31,112 @@ export default function Edit() {
   const navigate = useNavigate();
   const handleClick = async (e) =>{
     e.preventDefault()
+    let testCheck = true;
 
     try {
 
-        if(email && check== true){
+    
+        if(email && testCheck=== true){
             try {
 
             
-                    const res = Axios.get("users/checkE/" + email);
+                    const res = await Axios.get("users/checkE/" + email);
         
                 
                 
             } catch (error) {
-                if ((error.message).includes("409")){
-                    setEditStatus("Email is in use please enter another")
-                    setCheck(false);
-                    console.log("HERE")
-                }
-        
-                if ((error.message).includes("500")){
-                    setEditStatus("An error has occured with the server please refresh the page")
-                    setCheck(false);
+                testCheck = false;;
+                if(error.message.includes("409")){
+                    window.alert("email is already in use");
+                    navigate("/");
+
                 }
 
-                window.alert(setEditStatus)
+                if(error.message.includes("500")){
+                    window.alert("server error");
+                    navigate("/");
+
+                }
 
             }
         }
 
-        if(username && check== true){
+        if(username && testCheck=== true){
             try {
 
-                const res = Axios.get("users/checkU/" + username);
+                const res = await Axios.get("users/checkU/" + username);
         
                 console.log(res);
+
+                
                 
             } catch (error) {
+                testCheck = false;;
+                if(error.message.includes("410")){
+                    window.alert("username is already in use");
+                    navigate("/");
+                    testCheck = false;
 
-                console.log(error)
-                if ((error.message).includes("409")){
-                    setEditStatus("User name is already taken")
-                    setCheck(false);
-                }
-        
-                if ((error.message).includes("500")){
-                    setEditStatus("An error has occured with the server please refresh the page")
-                    setCheck(false);
                 }
 
+                if(error.message.includes("500")){
+                    window.alert("server error");
+                    navigate("/");
+
+                }
 
             }
         }
 
-        if(check){
+        if(testCheck){
 
 
         try {
 
             if(desc){
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {desc:desc, userId:user._id }
                 );
             }
 
             if(password){
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {password:password, userId:user._id }
                 );
             }
 
             if(from){
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {from:from, userId:user._id }
                 );
             }
 
             if(current){
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {city:current, userId:user._id }
                 );
             }
 
             if(relationship){
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {relationship:relationship, userId:user._id }
                 );
             }
 
             if(birthDate){
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {birthday:birthDate, userId:user._id }
                 );
             }
 
             if(firstName){
-                const res = Axios.put("users/" + user._id,
+                
+                const res = await Axios.put("users/" + user._id,
                 {firstName:firstName, userId:user._id }
                 );
             }
             if(lastName){
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {lastName:lastName, userId:user._id }
                 );
             }
@@ -146,24 +152,32 @@ export default function Edit() {
                   await Axios.post("/upload", data)
           
                 } catch (error) {
+                    testCheck = false;;
+
                   console.log(error)
 
                 }
 
                 let x = JSON.parse(localStorage.getItem(["user"]))
-                console.log(x.profilePicture)
+            console.log(x.profilePicture)
                 
             
           
               try {
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {coverPicture:fileName, userId:user._id})
                 let x = JSON.parse(localStorage.getItem(["user"]))
                 x.coverPicture=fileName;
-          
+
+                localStorage.setItem("user", JSON.stringify(x))          
               } catch (error) {
-          
-                console.log(error)
+                testCheck = false;;
+
+                if(error.message.includes("500")){
+                    window.alert("server error");
+                    navigate("/");
+
+                }
           
               }
             }
@@ -178,22 +192,41 @@ export default function Edit() {
                 setFilePfp(fileName);          
                 try {
                   await Axios.post("/upload", data)
-          
+
                 } catch (error) {
-                  console.log(error)
+                    testCheck = false;;
+
+                    if(error.message.includes("500")){
+                        window.alert("upload error");
+                        navigate("/");
+    
+                    }
 
                 }
             
           
               try {
-                const res = Axios.put("users/" + user._id,
+                const res = await Axios.put("users/" + user._id,
                 {profilePicture:fileName, userId:user._id})
+
                 let x = JSON.parse(localStorage.getItem(["user"]))
+                console.log(x.profilePicture)
+
                 x.profilePicture=fileName;
+
+                localStorage.setItem("user", JSON.stringify(x))          
+
           
               } catch (error) {
-          
+                testCheck = false;;
+
                 console.log(error)
+
+                if(error.message.includes("500")){
+                    window.alert("server error");
+                    navigate("/");
+
+                }
           
               }
               }
@@ -207,13 +240,14 @@ export default function Edit() {
             
             
         } catch (error) {
-    
-            if ((error.message).includes("500")){
-                setEditStatus("An error has occured with the server please refresh the page")
-                setCheck(false);
-                
+            testCheck = false;;
+
+            if(error.message.includes("500")){
+                window.alert("server error");
+                navigate("/edit");
 
             }
+
 
 
         }
@@ -223,10 +257,23 @@ export default function Edit() {
         
         
     } catch (error) {
+        testCheck = false;;
 
-        console.log(error);
+        if(error.message.includes("500")){
+            window.alert("server error");
+            navigate("/edit");
+
+        }
         
     }
+
+    if(testCheck){
+        window.alert("edit succesful");
+        navigate("/");
+        window.location.reload();
+    }
+    
+    
 }
 
 
@@ -432,7 +479,7 @@ export default function Edit() {
                                 />
                             </div>
                         </div>
-                        <p>{editStatus}</p>
+                        <p className='errorMessageText'>{editStatus}</p>
                         <button className="btn btn-primary" onClick={handleClick} type="button">Save changes</button>
                     </form>
                 </div>

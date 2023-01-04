@@ -4,6 +4,9 @@ const io = require("socket.io")(8900,{
     }
 })
 
+
+
+
 let users = [];
 
 //make sure users in users array are unique
@@ -28,24 +31,35 @@ io.on("connection", (socket) => {
         addUser(userId, socket.id);
         io.emit("getUsers", users)
     });
-
     
     
 
     //messaging
 
     socket.on("sendMessage", ({senderId,recieverId,text})=>{
-        const user = getUser(recieverId);
+        const receiver = getUser(recieverId);
 
-        io.to(user.socketId).emit("getMessage",{
+        io.to(receiver.socketId).emit("getMessage",{
             senderId, 
             text,
         })
     })
+
+    //notifications
+
+    socket.on("sendNotification", ({ senderName, receiverName, type }) => {
+        const receiver = getUser(receiverName);
+        io.to(receiver.socketId).emit("getNotification", {
+          senderName,
+          type,
+        });
+      });
 
     socket.on("disconnect", ()=>{
         console.log("a user disconnected")
         removeUsers(socket.id)
         io.emit("getUsers", users)
     })
+
+
 })

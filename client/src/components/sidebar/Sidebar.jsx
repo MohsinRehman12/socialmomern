@@ -2,69 +2,85 @@ import React from 'react'
 import "./Sidebar.css"
 import {Users} from "../../testData"
 import Closefriend from '../closefriend/Closefriend'
-
+import {Link} from "react-router-dom"
+import { AuthContext } from '../../context/AuthContext';
+import {useContext, useState, useEffect} from 'react'
 import { 
-  RssFeed,
+  DynamicFeedOutlined,
   Chat,
-  PlayCircleFilledOutlined,
-  Group,
-  Bookmark,
+  AccountCircleOutlined,
   HelpOutline,
-  WorkOutline,
-  Event,
-  School 
 } from "@mui/icons-material"
+
+import Axios from 'axios'
+
+
 
 export default function Sidebar() {
 
-  console.log("users")
-  console.log(Users)
+
+  const [friends, setFriends] = useState([])
+
+  
+  const {user} = useContext(AuthContext);
+
+  useEffect(()=>{
+    const getFollowers = async () =>{
+      try {
+
+        const friendList = await Axios.get("/users/friends/"+user._id)
+        
+        setFriends(friendList.data)
+        console.log('friendList', friendList.data)
+
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
+    //get around async not being used in useEffect by creating a async function and then calling it
+    getFollowers(); 
+  },[user])
   return (
     <div className='sidebar'>
       <div className="sidebarWrapper">
       <ul className="sidebarList">
+        
           <li className="sidebarListItem">
-            <RssFeed className="sidebarIcon" />
+          <Link to="/" >
+            <DynamicFeedOutlined className="sidebarIcon" />
             <span className="sidebarListItemText">Feed</span>
+          </Link>
           </li>
           <li className="sidebarListItem">
+          <Link to="/messenger" >
             <Chat className="sidebarIcon" />
             <span className="sidebarListItemText">Chats</span>
+          </Link>
           </li>
+
+
           <li className="sidebarListItem">
-            <PlayCircleFilledOutlined className="sidebarIcon" />
-            <span className="sidebarListItemText">Videos</span>
+          <Link to={"/profile/"+user.username} >
+            <AccountCircleOutlined className="sidebarIcon" />
+            <span className="sidebarListItemText">Profile</span>
+          </Link>
           </li>
+         
+        
           <li className="sidebarListItem">
-            <Group className="sidebarIcon" />
-            <span className="sidebarListItemText">Groups</span>
-          </li>
-          <li className="sidebarListItem">
-            <Bookmark className="sidebarIcon" />
-            <span className="sidebarListItemText">Bookmarks</span>
-          </li>
-          <li className="sidebarListItem">
+            <Link to="/About">
             <HelpOutline className="sidebarIcon" />
-            <span className="sidebarListItemText">Questions</span>
+            <span className="sidebarListItemText">About</span>
+            </Link>
           </li>
-          <li className="sidebarListItem">
-            <WorkOutline className="sidebarIcon" />
-            <span className="sidebarListItemText">Jobs</span>
-          </li>
-          <li className="sidebarListItem">
-            <Event className="sidebarIcon" />
-            <span className="sidebarListItemText">Events</span>
-          </li>
-          <li className="sidebarListItem">
-            <School className="sidebarIcon" />
-            <span className="sidebarListItemText">Courses</span>
-          </li>
+          
         </ul>
         
-        <button className="sidebarButton">Show More</button>
         <hr className='sidebarHr'></hr>
         <ul className='sidebarFollowerList'>
-          {Users.map((u)=>(
+          {friends.map((u)=>(
               <Closefriend key={u.id} user={u} />
           ))}
         </ul>

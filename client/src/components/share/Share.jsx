@@ -49,7 +49,7 @@ export default function Share() {
 
     }
   }
-
+  console.log(user.profilePicture)
   return (
     <div className="share">
       <div className="shareWrapper">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./Post.css"
-import {MoreVert, Favorite, Recommend, Comment} from "@mui/icons-material"
+import {MoreVert, Favorite, Recommend, Comment, FavoriteBorderOutlined} from "@mui/icons-material"
 import Axios from "axios";
 import {format} from "timeago.js";
 import {Link} from "react-router-dom";
@@ -132,7 +132,11 @@ export default function Post({post}) {
         <div className="postBottom">
 
           <div className="postBottomLeft">
-            <Favorite className = "postIcons" htmlColor='tomato' onClick={likeHandler}/>
+            {isLiked ? 
+            <Favorite className = "postIcons" htmlColor='tomato' onClick={likeHandler}/> 
+            :
+            <FavoriteBorderOutlined className='postIcons' htmlColor='#272727' onClick={likeHandler} />
+            }
             <span className="postLikeCounter">{like} people liked this</span>
           </div>
 

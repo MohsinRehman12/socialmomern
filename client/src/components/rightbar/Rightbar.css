@@ -1,10 +1,13 @@
 .rightbar{
     flex: 3;
-    
+    background-color: whitesmoke;
+
 }
 
-.rightbarWrppaer{
+.rightbarWrapper{
     padding: 20px 20px 0 0;
+    background-color: whitesmoke;
+
 }
 
 .birthdayIcons{
@@ -45,11 +48,11 @@
 }
 
 .rightbarPfp{
-    width: 40spx;
+    width: 40px;
     height: 40px;
     border-radius: 25px;
     object-fit: cover;
-    
+
 }
 
 .rightbarOnline{
@@ -94,7 +97,6 @@
   .rightbarFollowings{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
   }
   
   .rightbarFollowing{
@@ -115,7 +117,7 @@
     margin-top: 30;
     margin-bottom: 10px;
     border: none;
-    color: black;
+    color: #272727;
     border-radius: 5px;
     padding: 5px 10px;
     display: flex;
@@ -123,10 +125,26 @@
     font-style: 16px;
     font-weight: 500;
     cursor: pointer;
+    background-color: whitesmoke;
+    outline: 1px solid #272727;
   }
 
   .rightbarFollow:hover{
     background-color: #272727;
     color: white;
     transition: ease-in-out 0.5s;
+  }
+
+  .rightbarFollowingName{
+    color: #555;
+  }
+
+  .userFollowingsLink{
+    padding: 10px;
+
+  }
+  .userFollowingsLink:hover{
+    background-color: lightgray;
+    transition: 0.5s ease-in-out;
+    padding: 10px;
   }

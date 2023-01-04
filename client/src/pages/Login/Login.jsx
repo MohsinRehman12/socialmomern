@@ -17,7 +17,7 @@ import { useContext } from 'react';
 import { AuthContext } from "../../context/AuthContext"
 import { CircularProgress } from '@mui/material';
 import { Navigate } from 'react-router-dom';
-
+import "../Register/Register.css"
 
 function Login() {
   const email = useRef();
@@ -33,6 +33,13 @@ function Login() {
       dispatch)
 
       console.log('error', error)
+
+      if(error.message.includes("404")){
+        setLoginStatus("Incorrect Credentials")
+      }
+      else{
+        setLoginStatus("")
+      }
   }
 
   
@@ -58,13 +65,12 @@ function Login() {
               </div>
 
               <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>Sign into your account</h5>
-
+              <p className="passwordStatusText">{loginStatus}</p>
                 <MDBInput wrapperClass='mb-4' label='Email' id='Email' type='email' size="lg" required ref={email}/>
                 <MDBInput wrapperClass='mb-4' label='Password' id='Password' type='password' size="lg" required ref={password}/>
 
               <MDBBtn className="mb-4 px-5" color='dark' size='lg'> {isFetching ? <CircularProgress color="inherit" size="20px"/> : "Login" }</MDBBtn>
               </form>
-              <a className="small text-muted" href="#!">Forgot password?</a>
               <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}><a href="/register">Don't have an account? Register here</a></p>
 
               

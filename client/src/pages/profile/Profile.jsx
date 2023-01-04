@@ -8,7 +8,10 @@ import  { useState, useEffect, useContext } from 'react'
 import Axios from "axios";
 import { useNavigate , useParams } from "react-router";
 import { AuthContext } from '../../context/AuthContext';
-
+import {
+  LogoutOutlined,
+  ManageAccountsOutlined
+} from "@mui/icons-material"
 
 
 export default function Profile() {
@@ -42,18 +45,24 @@ export default function Profile() {
   
   
   useEffect(()=>{
-    
+
+
     const fetchUser= async () =>{
+
+    try {
       const res = await Axios.get(`/users?username=${params.username}`)
       setUser(res.data)
+    } catch (error) {
+
+      if ((error.message).includes("500")){
+        navigate("/")
+      }
+    }    
+      
     }
 
+    fetchUser();
 
-    fetchUser().then(response => {
-      console.log(response);
-  }).catch(e => {
-      console.log(e);
-  });
   },[params.username])
 
   
@@ -70,7 +79,7 @@ export default function Profile() {
             <img src={user.profilePicture ? PublicFolder+user.profilePicture : PublicFolder+"pfp/pfp1.jpg"} className='profilePfpImg' />
           </div>
           <div className="profileInfo">
-            <h4 className="profileName">{user.username}</h4>
+          <h4 className="profileName">{user.username}</h4>
             {user.firstName?
             <h4 className="profileRealName">Full Name: {user?.firstName} {user?.lastName}</h4>
             : null}
@@ -78,8 +87,15 @@ export default function Profile() {
             <p className="profileDesc">{user.desc}</p>
             {params.username === currentUser.username ? 
             <>
-              <button className='Logout' onClick={handleClick}> Logout </button>
-              <a href='../edit'><button className='ProfileButton'> Edit </button></a>
+              <button className='LogoutButton' onClick={handleClick}> 
+              Logout
+              <LogoutOutlined className='accountIcons'></LogoutOutlined>
+              </button>
+              <a href='../edit'>
+              <button className='LogoutButton'> 
+              Edit 
+              <ManageAccountsOutlined className='accountIcons'></ManageAccountsOutlined>   
+              </button></a>
               
             </>
             :null}

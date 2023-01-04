@@ -1,0 +1,13 @@
+.sidebarFollower{
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.sidebarFollower:hover{
+    background-color: lightgray;
+    transition: 0.5s;
+}
+
+.followerName{
+    color: #69707a;
+}

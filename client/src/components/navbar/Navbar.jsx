@@ -11,19 +11,21 @@ export default function Navbar() {
 
   const {user} = useContext(AuthContext);
   const [seachUser, setSearchUser] = useState("")
-  const [searchResults, setSearchResults] = useState([])
   const navigate = useNavigate();
+  
+  
   const handleSubmit = async(e) =>{
-
+    let profileSearch=([]);
     try {
       const res = await Axios.get("/users/getUA/" + seachUser)
-      setSearchResults(res.data)
+        let x = res.data;
+        navigate ("/search", {state:{x}})        
     } catch (error) {
       console.log(error)
     }
-
-    navigate("/search", {state:{searchResults}})
-
+    
+    
+    
   }
 
   return (

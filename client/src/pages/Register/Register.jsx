@@ -16,6 +16,7 @@ import "./Register.css"
 import Axios from "axios";
 
 import {useNavigate} from "react-router";
+import { useEffect } from 'react';
 
 function App() {
 
@@ -30,17 +31,15 @@ function App() {
 
   const [registerStatus, setRegisterStatus] = useState('')
   const [passwordStatus, setPasswordStatus] = useState('')
+  const [usernameStatus, setUsernameStatus] = useState('')
 
+  const [disableButton, setDisableButton] = useState(true)
   const handleClick = async (e) =>{
     
     e.preventDefault();
 
-    if(passwordAgain.current.value !== password.current.value){
-      setPasswordStatus("Passwords Dont Match")
-    }
+    
 
-    else{
-      setPasswordStatus("")
 
       const user = {
         username: username.current.value,
@@ -67,11 +66,142 @@ function App() {
           setRegisterStatus("An error has occured with the server please refresh the page")
         }
       }
-
-    }
    
 
   }
+
+  const testChangeUser = async (e) => {
+    if(username.current.value.includes(" ")
+    || username.current.value.includes("/")
+    || username.current.value.includes("@")
+    || username.current.value.includes("#")
+    || username.current.value.includes("$")
+    || username.current.value.includes("%")
+    || username.current.value.includes("^")
+    || username.current.value.includes("&")
+    || username.current.value.includes("*")
+    || username.current.value.includes("(")
+    || username.current.value.includes(")")
+    || username.current.value.includes("+")
+    || username.current.value.includes("=")
+    || username.current.value.includes("?")
+    || username.current.value.includes("\\")
+    || username.current.value.includes("~")
+    || username.current.value.includes("`")
+    || username.current.value.includes("<")
+    || username.current.value.includes(">")
+    || username.current.value.includes(".")
+    || username.current.value.includes("[")
+    || username.current.value.includes("]")
+    || username.current.value.includes("{")
+    || username.current.value.includes("}")
+    || username.current.value.includes("|")
+    || username.current.value.includes("!")
+
+    ){
+      setDisableButton(true)
+      setUsernameStatus("username can only include [a-Z], [0-9] and _ or -")
+    }
+
+    else if(username.current.value[username.current.value.length-1].includes("_")
+    || username.current.value[username.current.value.length-1].includes("-")
+    ){
+      setUsernameStatus("usernames must not end with a - or _")
+      setDisableButton(true)
+    }
+
+    else if(username.current.value ===""){
+      setUsernameStatus("")
+      setDisableButton(true)
+    }
+
+    
+    else if(username.current.value.length <6){
+      setUsernameStatus("usernames must be 6 or more characters")
+      setDisableButton(true)
+
+
+    }
+
+    else if(registerStatus==="" && usernameStatus==="" && passwordStatus ==""){
+      setDisableButton(false)
+
+    }
+
+    
+
+    else{
+      setUsernameStatus("")
+    }
+
+
+  }
+
+  const testChange = async (e) =>{
+    if(password.current.value.includes(" ")
+    || password.current.value.includes("/")
+    || password.current.value.includes("@")
+    || password.current.value.includes("#")
+    || password.current.value.includes("$")
+    || password.current.value.includes("%")
+    || password.current.value.includes("^")
+    || password.current.value.includes("&")
+    || password.current.value.includes("*")
+    || password.current.value.includes("(")
+    || password.current.value.includes(")")
+    || password.current.value.includes("+")
+    || password.current.value.includes("=")
+    || password.current.value.includes("?")
+    || password.current.value.includes("\\")
+    || password.current.value.includes("~")
+    || password.current.value.includes("`")
+    || password.current.value.includes("<")
+    || password.current.value.includes(">")
+    || password.current.value.includes(".")
+    || password.current.value.includes("[")
+    || password.current.value.includes("]")
+    || password.current.value.includes("{")
+    || password.current.value.includes("}")
+    || password.current.value.includes("|")
+    || password.current.value.includes("!")
+
+    ){
+      setDisableButton(true)
+      setPasswordStatus("password can only include [a-Z], [0-9] and _ or -")
+    }
+
+    else if(password.current.value==="" || passwordAgain.current.value==="" ){
+      setPasswordStatus("")
+      setDisableButton(true)
+    }
+
+    else if(passwordAgain.current.value !== password.current.value){
+      setPasswordStatus("Passwords Dont Match")
+      setDisableButton(true)
+
+    }
+    else if(passwordAgain.current.value.length <6 || password.current.value.length <6){
+      setPasswordStatus("Passwords must be 6 or more characters")
+      setDisableButton(true)
+
+
+    }else if(registerStatus==="" && usernameStatus==="" && passwordStatus ==""){
+      setDisableButton(false)
+
+    }
+
+    
+
+    else{
+      setPasswordStatus("")
+    }
+
+
+  }
+  useEffect(()=>{
+    
+
+  }, [password])
   
   return (
     <MDBContainer className="my-5">
@@ -93,6 +223,7 @@ function App() {
 
               <h5 className="fw-normal my-4 pb-3" style={{letterSpacing: '1px'}}>Sign Up</h5>
 
+              <p className='passwordStatusText'>{usernameStatus}</p>
                 <MDBInput 
                 wrapperClass='mb-4' 
                 label='Username' 
@@ -100,7 +231,9 @@ function App() {
                 ref = {username} 
                 required 
                 type='text' 
-                size="lg"/>
+                size="lg"
+                onChange={(e)=>testChangeUser(e)}
+                />
 
                 <MDBInput 
                 wrapperClass='mb-4' 
@@ -148,6 +281,7 @@ function App() {
                 type='password' 
                 size="lg"
                 minLength="6"
+                onChange={(e)=>testChange(e)}
                 />
 
                 <MDBInput 
@@ -163,7 +297,7 @@ function App() {
 
               <p className='passwordStatusText'>{registerStatus}</p>
 
-              <MDBBtn className="mb-4 px-5" color='dark' size='lg' onSubmit={handleClick}>Register</MDBBtn>
+              <MDBBtn disabled={disableButton} className="mb-4 px-5" color='dark' size='lg' onSubmit={handleClick}>Register</MDBBtn>
 
               </form>
               <p className="mb-5 pb-lg-2" style={{color: '#393f81'}}>Already have an account? <a href="/login" style={{color: '#393f81'}}>Login here</a></p>

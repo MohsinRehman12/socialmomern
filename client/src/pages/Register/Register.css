@@ -11,5 +11,5 @@
 }
 
 .passwordStatusText{
-    color: tomato;
+    color: tomato !important;
 }

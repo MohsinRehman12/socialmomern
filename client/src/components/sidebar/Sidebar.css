@@ -4,6 +4,8 @@
     overflow-y: scroll;
     position: sticky;
     top: 50px;
+    color: #69707a;
+    background-color: whitesmoke;
 }
 
 ::-webkit-scrollbar{
@@ -21,7 +23,7 @@
 
 .sidebarWrapper{
     padding: 20px;
-    background-color: aliceblue;
+    background-color: whitesmoke;
 }
 
 .sidebarList{
@@ -81,4 +83,17 @@
     height: 32px;
     border-radius: 50px;
     margin-right: 10px;
+}
+
+.sidebarListItem:hover{
+    background-color: darkgray;
+    transition: 0.5s ease-in-out;
+}
+
+.sidebarListItemText{
+    color: #272727;
+}
+
+.sidebarIcon{
+    color: #272727;
 }

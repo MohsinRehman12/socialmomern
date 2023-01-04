@@ -70,3 +70,9 @@ body{
     align-items: center !important;
     justify-content: center !important;
 }
+
+.errorMessageText{
+    color: tomato;
+    font-weight: 700;
+    font-size: 20px;
+}

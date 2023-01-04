@@ -199,7 +199,7 @@ router.get("/checkU/:username", async (req,res) =>{
         const checkForUsername = await User.findOne({ username: req.params.username });
 
         if(checkForUsername){
-            return res.status(409).json("username is already taken");
+            return res.status(410).json("username is already taken");
   
         }
 
