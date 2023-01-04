@@ -25,6 +25,7 @@ const App = () => {
   const {user} = useContext(AuthContext)
 
   const [socket, setSocket] = useState(null)
+  const [onlineUsers, setOnlineUsers] = useState(null);
 
   useEffect(()=>{
     setSocket(io("ws://localhost:8900"));
@@ -34,6 +35,10 @@ const App = () => {
   useEffect(()=>{
     socket?.emit("addUser", user?._id)
 
+    socket?.on("getUsers", (users)=>{
+      setOnlineUsers(user.followings.filter(f=>users.some(u=>u.userId === f)))
+  })
+
   },[socket,user])
    
   console.log('socket',socket)
@@ -41,7 +46,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/"  element={user ? <Home socket={socket}></Home> : <Register/>}>
+        <Route exact path="/"  element={user ? <Home socket={socket} onlineUsers={onlineUsers}></Home> : <Register/>}>
 
         </Route>
 
@@ -52,7 +57,7 @@ const App = () => {
           
         </Route>
 
-        <Route exact path="/messenger"  element={!user ? <Navigate to="/" /> :<Messenger sockets={socket} ></Messenger>}>
+        <Route exact path="/messenger"  element={!user ? <Navigate to="/" /> :<Messenger sockets={socket} onlineUsers={onlineUsers}></Messenger>}>
           
         </Route>
 

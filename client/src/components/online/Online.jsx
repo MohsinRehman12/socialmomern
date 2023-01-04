@@ -1,37 +1,46 @@
 import Axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
-export default function Online({user}) {
+export default function Online({onlineUsers}) {
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
+  const {user:currentUser} = useContext(AuthContext);
+  const [friends, setFriends] = useState([]);
+  const [onlineFriends, setOnlineFriends] = useState([]);
 
-  const [userInfo, setUserInfo] = useState([])
   useEffect(()=>{
-    const getUser = async() =>{
-
-      try {
-        
-        const res = await Axios.get(`/users?userId=${user}`);
-
-        setUserInfo(res.data)
-
-      } catch (error) {
-        console.log(error)
-      }
-
+    const getUsers = async ()=>{
+      const res = await Axios.get("/users/friends/"+currentUser._id)
+      setFriends(res.data);
     }
 
-  getUser();
-  },[])
+    getUsers();
+
+
+  },[currentUser._id])
+
+
+  useEffect(()=>{
+
+    setOnlineFriends(
+      friends.filter(f=>onlineUsers?.includes(f._id))
+    )
+
+  },[friends, onlineUsers])
+  
   return (
-    
+    <>
+    {onlineFriends.map(o=>(
     <li className="rightbarFriend">
 
             <div className="rightbarPfpContainer">
-              <img className="rightbarPfp" src={userInfo.profilePicture ? PublicFolder + userInfo.profilePicture : PublicFolder+"pfp/pfp1.jpg"} alt=''/>
+              <img className="rightbarPfp" src={o.profilePicture ? PublicFolder + o.profilePicture : PublicFolder+"pfp/pfp1.jpg"} alt=''/>
               <span className="rightbarOnline"></span>
             </div>
-            <span className="rightbarUsername">{userInfo.username}</span>
+            <span className="rightbarUsername">{o.username}</span>
     </li>
+    ))}
+    </>
   )
 }

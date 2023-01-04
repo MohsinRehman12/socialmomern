@@ -46,6 +46,8 @@ export default function ChatOnline({onlineUsers, currentId, setCurrentChat}) {
 
     },[friends, onlineUsers])
 
+    
+
   return (
 
     

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import "./Rightbar.css"
 import { PersonAddAltOutlined, PersonRemoveOutlined} from "@mui/icons-material"
-import {Users} from "../../testData"
 import Online from "../online/Online"
 import Axios from 'axios'
 import { AuthContext } from "../../context/AuthContext";
@@ -10,13 +9,13 @@ import { useNavigate } from 'react-router-dom'
 import {io} from 'socket.io-client'
 
 
-const Rightbar=({ user, socket })=> {
+const Rightbar=({ user, socket, onlineUsers })=> {
 
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [friends, setFriends] = useState([])
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
-  const [onlineUsers, setOnlineUsers] = useState([]);
+  // const [onlineUsers, setOnlineUsers] = useState([]);
   // const socket= useContext(SocketContext);
   const navigate = useNavigate();
 
@@ -26,15 +25,24 @@ const Rightbar=({ user, socket })=> {
 
   // }, [])
 
-  useEffect(()=>{
-    socket?.emit("addUser", currentUser._id)
 
-    socket?.on("getUsers", (users)=>{
-        setOnlineUsers(currentUser.followings.filter(f=>users.some(u=>u.userId === f)))
-    })
 
-  }, [user])
+ 
 
+
+  
+
+  // useEffect(()=>{
+
+  //   socket?.emit("getUser")
+
+  //   socket?.on("getUsers", (users)=>{
+  //     setOnlineUsers(currentUser.followings.filter(f=>users.some(u=>u.userId === f)))
+  // })
+
+  // }, [currentUser])
+
+  
 
 
   useEffect(()=>{
@@ -42,7 +50,7 @@ const Rightbar=({ user, socket })=> {
     const getFollowers = async () =>{
       try {
 
-        const friendList = await Axios.get("/users/friends/"+user._id)
+        const friendList = await Axios.get("/users/friends/"+currentUser._id)
         
         setFriends(friendList.data)
         console.log('friendList', friendList.data)
@@ -96,8 +104,7 @@ const Rightbar=({ user, socket })=> {
   }
 
   
-
-
+console.log('online',onlineUsers)
   const HomeRightbar = () =>{
     return(
       <>
@@ -105,9 +112,7 @@ const Rightbar=({ user, socket })=> {
       <div className="rightbarWrapper">
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {onlineUsers.map(u=>(
-              <Online key={u.id} user={u}/>
-          ))}
+          <Online onlineUsers={onlineUsers} />
         </ul>
         </div>
     </div>

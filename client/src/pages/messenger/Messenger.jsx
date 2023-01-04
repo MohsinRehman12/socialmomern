@@ -59,8 +59,7 @@ const Messenger = ({ sockets} ) => {
 //useEffect for adding and removing people from the socket
 
   useEffect(()=>{
-    sockets?.emit("addUser", user._id)
-    sockets?.emit("getUser")
+    sockets?.emit("addUser")
 
     sockets?.on("getUsers", (users)=>{
         setOnlineUsers(user.followings.filter(f=>users.some(u=>u.userId === f)))
@@ -154,7 +153,7 @@ const Messenger = ({ sockets} ) => {
   //   console.log(results)
   // },[search])
 
-  console.log("a", sockets)
+  console.log("a", onlineUsers)
   return (
 <>
     <Navbar /> 

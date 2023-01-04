@@ -7,7 +7,7 @@ import Feed from '../../components/feed/Feed';
 import Rightbar from '../../components/rightbar/Rightbar';
 import { useNavigate } from 'react-router-dom';
 
-const Home = ({socket})=> {
+const Home = ({socket, onlineUsers})=> {
   
   console.log('socket home', socket);
   return (
@@ -16,7 +16,7 @@ const Home = ({socket})=> {
       <div className="homeContainer">
       <Sidebar />
       <Feed />
-      <Rightbar socket={socket}/>
+      <Rightbar onlineUsers={onlineUsers} socket={socket}/>
       </div>
     </>
   )
