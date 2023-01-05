@@ -1,6 +1,6 @@
 .navbarContainer{
     height: 50px;
-    width: 100%;
+    width: inherit;
     background-color: #272727 ;
     color: whitesmoke;
     display: flex;
@@ -8,6 +8,8 @@
     position: sticky;
     top: 0;
     z-index: 999;
+    min-width: auto;
+    
 }
 .navbarLeft{
     flex: 3;
@@ -15,13 +17,23 @@
 
 .navbarCenter{
     flex: 5;
+    min-width: 50%;
+    display: flex;
+
 }
+
+.navbarImg{
+    margin-right: 10px;
+}
+
+
 
 .navbarRight{
     flex: 4;
     display: flex;
+    min-width: 25%;
+
     align-items: center;
-    justify-content: space-around;
 }
 
 .navbarImg{
@@ -107,6 +119,8 @@
 .navbarIcons{
     display: flex;
     font-size: 14px;
+    justify-content: space-evenly;
+    flex: 1;
 }
 
 .linkTo{
@@ -147,3 +161,6 @@ button.navbarIconItem{
     transition: 0.5s ease-in-out;
 }
 
+.navbarLink{
+    flex: 1;
+}

@@ -104,8 +104,8 @@ const openF = Boolean(anchorElF);
 
   },[socket])
 
+  console.log(notificationsFollow)
   return (
-    <>
     <div className="navbarContainer">
       <div className="navbarLeft">
       <Link to="/" className='linkTo'>
@@ -125,15 +125,17 @@ const openF = Boolean(anchorElF);
 
         </div>
 
-      </div>
-
-      <div className="navbarRight">
-          <div className="navbarLinks">
+        <div className="navbarLinks">
 
             <button className="navbarLink"
             onClick={handleSubmit}
             >Search</button>
           </div>
+
+      </div>
+
+      <div className="navbarRight">
+          
         
           <div className="navbarIcons">
           <button className="navbarIconItem"
@@ -293,16 +295,17 @@ const openF = Boolean(anchorElF);
           </button>
         </Menu>
           </div>
-      </div>
-      <Link to={`/profile/${user.username}`}>
+
+      <Link className="navbarLinks" to={`/profile/${user.username}`}>
 
       <img src={user.profilePicture ? PublicFolder + user.profilePicture : PublicFolder+"pfp/pfp1.jpg"} alt="boof" className="navbarImg" />
       
       </Link>
+      </div>
+      
 
 
     </div>
     
-</>
   )
 }

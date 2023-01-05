@@ -1,6 +1,8 @@
 .rightbar{
     flex: 3;
     background-color: whitesmoke;
+    min-width: 25%;
+
 
 }
 

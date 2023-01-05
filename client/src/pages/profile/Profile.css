@@ -1,10 +1,12 @@
 .profile{
     display: flex;
     background-color: whitesmoke;
+    margin-right: 0;
+    min-width: 75%;
 }
 
 .profileRight{
-    flex: 9;
+    flex: 8;
 }
 
 .profileRightBottom{
@@ -79,4 +81,8 @@
   .profileRealName{
     font-weight: 300;
     font-size: 20px;
+  }
+
+  .profile > Sidebar{
+    flex: 4;
   }

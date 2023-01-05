@@ -42,7 +42,7 @@ export default function Sidebar() {
     getFollowers(); 
   },[user])
   return (
-    <div className='sidebar'>
+    <div className='sidebarcontainer'>
       <div className="sidebarWrapper">
       <ul className="sidebarList">
         

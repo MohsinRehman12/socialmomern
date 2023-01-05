@@ -4,6 +4,7 @@
     padding: 10px;
     cursor: pointer;
     margin: 20px;
+    margin-left: 0;
 
 }
 
@@ -16,9 +17,10 @@
     height: 40px;
     border-radius: 50px;
     object-fit: cover;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .convoName{
     font-weight: 500;
+    overflow-wrap: break-word;
 }

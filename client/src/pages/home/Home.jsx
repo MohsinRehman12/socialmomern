@@ -11,6 +11,7 @@ const Home = ({socket, onlineUsers})=> {
   
   return (
     <>
+    
       <Navbar/>
       <div className="homeContainer">
       <Sidebar />

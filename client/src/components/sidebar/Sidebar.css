@@ -1,11 +1,11 @@
-.sidebar{
-    flex:4;
-    height: calc(100vh - 50px);
+.sidebarcontainer{
+    flex: 4;
     overflow-y: scroll;
     position: sticky;
     top: 50px;
     color: #69707a;
     background-color: whitesmoke;
+    min-width: 25%;
 }
 
 ::-webkit-scrollbar{
