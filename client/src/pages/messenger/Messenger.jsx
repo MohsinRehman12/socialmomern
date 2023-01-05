@@ -10,10 +10,12 @@ import "./messenger.css"
 import Axios from "axios"
 import { useRef } from 'react'
 import {io} from 'socket.io-client'
-const Messenger = ({ sockets} ) => {
+import { SocketContext } from '../../context/SocketContext';
+
+const Messenger = ( ) => {
 
   const {user} = useContext(AuthContext)
-
+  const sockets = useContext(SocketContext);
   const [convo, setConvo] = useState([])
   const [currentChat, setCurrentChat] = useState(null)
   const [messages, setMessages] = useState([])
@@ -53,7 +55,6 @@ const Messenger = ({ sockets} ) => {
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
-      console.log('arrivalMessage',arrivalMessage);
   }, [arrivalMessage, currentChat]);
 
 //useEffect for adding and removing people from the socket
@@ -103,7 +104,6 @@ const Messenger = ({ sockets} ) => {
         }
     }
     getMessage();
-    console.log(messages)
   }, [currentChat])
 
 
@@ -126,6 +126,14 @@ const Messenger = ({ sockets} ) => {
         recieverId : recieverId,
         text: newMessage
     })
+
+    sockets.emit("sendNotificationMessenger", {
+      senderName: user.username,
+      recieverId: recieverId,
+      type:1,
+      pfp: user.profilePicture,
+      senderId: user._id
+    } )
 
     try {
         const res =  await Axios.post("/message", message);
@@ -153,7 +161,6 @@ const Messenger = ({ sockets} ) => {
   //   console.log(results)
   // },[search])
 
-  console.log("a", onlineUsers)
   return (
 <>
     <Navbar /> 

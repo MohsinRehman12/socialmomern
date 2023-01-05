@@ -7,9 +7,9 @@ import { AuthContext } from "../../context/AuthContext";
 import {Link} from "react-router-dom"
 import { useNavigate } from 'react-router-dom'
 import {io} from 'socket.io-client'
+import { SocketContext } from '../../context/SocketContext'
 
-
-const Rightbar=({ user, socket, onlineUsers })=> {
+const Rightbar=({ user, onlineUsers })=> {
 
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser, dispatch } = useContext(AuthContext);
@@ -18,7 +18,7 @@ const Rightbar=({ user, socket, onlineUsers })=> {
   // const [onlineUsers, setOnlineUsers] = useState([]);
   // const socket= useContext(SocketContext);
   const navigate = useNavigate();
-
+  const socket = useContext(SocketContext)
   // useEffect(()=>{
 
   //   socket.current = io("ws://localhost:8900")
@@ -53,7 +53,6 @@ const Rightbar=({ user, socket, onlineUsers })=> {
         const friendList = await Axios.get("/users/friends/"+currentUser._id)
         
         setFriends(friendList.data)
-        console.log('friendList', friendList.data)
 
 
       } catch (error) {
@@ -67,7 +66,6 @@ const Rightbar=({ user, socket, onlineUsers })=> {
 
   const handleClick = async () =>{
     try {
-      console.log('user id click',user._id)
       if(followed){
         await Axios.put(`/users/${user._id}/unfollow`, {userId:currentUser._id})
         dispatch({type:"UNFOLLOW", payload:user._id})
@@ -79,7 +77,17 @@ const Rightbar=({ user, socket, onlineUsers })=> {
       }
       
       setFollowed(!followed)
-      console.log('current followed', followed)
+
+      if(!followed){
+        socket.emit("sendNotificationFollow", {
+          senderName: currentUser.username,
+          recieverId: user._id,
+          type:1,
+          pfp: currentUser.profilePicture,
+          senderId: currentUser._id
+        } )
+    
+      }
 
     } catch (error) {
       console.log(error)
@@ -104,7 +112,6 @@ const Rightbar=({ user, socket, onlineUsers })=> {
   }
 
   
-console.log('online',onlineUsers)
   const HomeRightbar = () =>{
     return(
       <>

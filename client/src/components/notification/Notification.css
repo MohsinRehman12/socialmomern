@@ -1,0 +1,18 @@
+.notifcationImg{
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+}
+
+.notifcationWrapper{
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    position: absolute;
+}
+
+.notificationName{
+    margin-left: 5px;
+    margin-right: 5px;
+}

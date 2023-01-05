@@ -31,7 +31,6 @@ export default function Sidebar() {
         const friendList = await Axios.get("/users/friends/"+user._id)
         
         setFriends(friendList.data)
-        console.log('friendList', friendList.data)
 
 
       } catch (error) {

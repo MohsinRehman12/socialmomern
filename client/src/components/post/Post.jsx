@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Comments from "../comment/Comments"
-
+import { SocketContext } from '../../context/SocketContext';
 export default function Post({post}) {
 
 
@@ -22,7 +22,7 @@ export default function Post({post}) {
   const {user:currentUser} = useContext(AuthContext) //use nickname currentuser
   const [openComments, setOpenComments] = useState(false);
   const [newComment, setNewComment] = useState("")
-
+  const socket = useContext(SocketContext);
   const [comments, setComments] = useState([])
 
   useEffect (()=>{
@@ -42,12 +42,26 @@ export default function Post({post}) {
     Axios.put ("/posts/"+post._id+"/like",  
     {userId:currentUser._id})
 
-    console.log('id is', currentUser._id)
     } catch (error) {
       console.log(error)
     }
     setLike(isLiked ? like -1 : like+1)
+    
     setIsLiked(!isLiked)
+
+    if(!isLiked){
+      socket.emit("sendNotification", {
+        senderName: currentUser.username,
+        recieverId: user._id,
+        type:1,
+        pfp: currentUser.profilePicture,
+        senderId: currentUser._id
+      } )
+  
+    }
+
+  
+    
   }
 
   useEffect(()=>{
@@ -89,12 +103,22 @@ export default function Post({post}) {
       postId: post._id,
       sender: currentUser._id,
       text: newComment,
+      
   }
 
     try {
         const res =  await Axios.post("/comment", comment);
         setComments([...comments, res.data])
         setNewComment('');
+
+        
+          socket.emit("sendNotification", {
+            senderName: currentUser.username,
+            recieverId: user._id,
+            type:2,
+          } )
+      
+        
         
     } catch (error) {
         console.log(error)
@@ -149,7 +173,7 @@ export default function Post({post}) {
 
             />
             <span className="postCommentText"> 
-            {post.comment} comments 
+            {post.comments} comments 
             
             </span>
           

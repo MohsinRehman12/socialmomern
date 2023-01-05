@@ -17,19 +17,18 @@ import {
 import { AuthContext } from "./context/AuthContext";
 import FindUser from "./pages/findUsers/FindUser";
 import {io} from 'socket.io-client'
-
+import { SocketContext, socket } from "./context/SocketContext";
 
 
 const App = () => {
 
   const {user} = useContext(AuthContext)
 
-  const [socket, setSocket] = useState(null)
   const [onlineUsers, setOnlineUsers] = useState(null);
 
-  useEffect(()=>{
-    setSocket(io("ws://localhost:8900"));
-  },[])
+  // useEffect(()=>{
+  //   setSocket(io("ws://localhost:8900"));
+  // },[])
 
 
   useEffect(()=>{
@@ -41,12 +40,11 @@ const App = () => {
 
   },[socket,user])
    
-  console.log('socket',socket)
-
   return (
+    <SocketContext.Provider value={socket}>
     <BrowserRouter>
       <Routes>
-        <Route exact path="/"  element={user ? <Home socket={socket} onlineUsers={onlineUsers}></Home> : <Register/>}>
+        <Route exact path="/"  element={user ? <Home  onlineUsers={onlineUsers}></Home> : <Register/>}>
 
         </Route>
 
@@ -57,7 +55,7 @@ const App = () => {
           
         </Route>
 
-        <Route exact path="/messenger"  element={!user ? <Navigate to="/" /> :<Messenger sockets={socket} onlineUsers={onlineUsers}></Messenger>}>
+        <Route exact path="/messenger"  element={!user ? <Navigate to="/" /> :<Messenger  onlineUsers={onlineUsers}></Messenger>}>
           
         </Route>
 
@@ -76,6 +74,7 @@ const App = () => {
 
       </Routes>
     </BrowserRouter>
+    </SocketContext.Provider>
   )
 }
 

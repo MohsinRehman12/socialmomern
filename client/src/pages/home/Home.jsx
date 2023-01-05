@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = ({socket, onlineUsers})=> {
   
-  console.log('socket home', socket);
   return (
     <>
       <Navbar/>

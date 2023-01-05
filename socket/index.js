@@ -25,6 +25,12 @@ const getUser = (userId) =>{
     return users.find(user=>user.userId === userId)
 }
 
+
+const getUserName = (username) =>{
+
+    return users.find(user=>user.username === username)
+}
+
 io.on("connection", (socket) => {
     console.log("a user has connected");
     socket.on("addUser", userId=>{
@@ -47,13 +53,51 @@ io.on("connection", (socket) => {
 
     //notifications
 
-    socket.on("sendNotification", ({ senderName, receiverName, type }) => {
-        const receiver = getUser(receiverName);
-        io.to(receiver.socketId).emit("getNotification", {
-          senderName,
-          type,
-        });
+    socket.on("sendNotification", ({ senderName, senderId, recieverId, type, pfp }) => {
+        const receiver = getUser(recieverId);
+
+        if(!(senderId===recieverId)){
+
+            io.to(receiver?.socketId).emit("getNotification", {
+                senderName,
+                type,
+                pfp
+            });
+
+        }
+        
       });
+
+      socket.on("sendNotificationMessenger", ({ senderName, senderId, recieverId, type, pfp }) => {
+        const receiver = getUser(recieverId);
+
+        if(!(senderId===recieverId)){
+
+            io.to(receiver?.socketId).emit("getNotificationMessenger", {
+                senderName,
+                type,
+                pfp
+            });
+
+        }
+        
+      });
+
+      socket.on("sendNotificationFollow", ({ senderName, senderId, recieverId, type, pfp }) => {
+        const receiver = getUser(recieverId);
+
+        if(!(senderId===recieverId)){
+
+            io.to(receiver?.socketId).emit("getNotificationFollow", {
+                senderName,
+                type,
+                pfp
+            });
+
+        }
+        
+      });
+
 
     socket.on("disconnect", ()=>{
         console.log("a user disconnected")

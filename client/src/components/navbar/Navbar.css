@@ -118,3 +118,32 @@
     color: aliceblue;
 
 }
+
+button.navbarIconItem{
+    color: white;
+    background-color: #272727;
+    border: none;
+}
+
+.notificationName{
+    font-size: 10px;
+}
+
+.notificationsButton{
+    background-color: whitesmoke;
+    width: 80%;
+    margin-top: 10px;
+    margin-left: 10%;
+    border-radius: 10px;
+    border: 1px solid #272727;
+    color: #272727;
+    font-size: 15px;
+    line-height: 1;
+}
+
+.notificationsButton:hover{
+    background-color: #272727;
+    color: white;
+    transition: 0.5s ease-in-out;
+}
+
