@@ -15,7 +15,8 @@ const multer = require("multer")
 var cors = require('cors')
 const path = require('path')
 
-
+const PORT = process.env.PORT || 5050;
+const http = require('http').Server(app);
 
 dotenv.config();
 mongoose.set('strictQuery', false);
@@ -79,6 +80,6 @@ app.get("/", (req,res)=> {
 app.get("/users", (req,res)=> {
     res.send("welcome to users page")
 })
-app.listen(5050, ()=>{
+http.listen(PORT, ()=>{
     console.log("Server is running")
 })
