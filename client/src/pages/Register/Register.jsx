@@ -244,9 +244,7 @@ function App() {
                 required type='email' 
                 size="lg"/>
 
-              <div className="nameBox">
               <MDBInput 
-                className='nameInput'
                 wrapperClass='mb-4' 
                 label='Enter First Name ' 
                 ref = {firstName} 
@@ -258,7 +256,6 @@ function App() {
                 />
 
                 <MDBInput 
-                className='nameInput'
                 wrapperClass='mb-4' 
                 label='Enter Last Name ' 
                 ref = {lastName} 
@@ -270,7 +267,6 @@ function App() {
                 />
 
 
-              </div>
                 
                 <p className='passwordStatusText'>{passwordStatus}</p>
                 <MDBInput 

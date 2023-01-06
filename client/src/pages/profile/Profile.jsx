@@ -5,7 +5,7 @@ import Feed from '../../components/feed/Feed';
 import Rightbar from '../../components/rightbar/Rightbar';
 import "./Profile.css"
 import  { useState, useEffect, useContext } from 'react'
-import Axios from "axios";
+import {axiosInstance} from '../../config';
 import { useNavigate , useParams } from "react-router";
 import { AuthContext } from '../../context/AuthContext';
 import {
@@ -50,7 +50,7 @@ export default function Profile() {
     const fetchUser= async () =>{
 
     try {
-      const res = await Axios.get(`/users?username=${params.username}`)
+      const res = await axiosInstance.get(`/users?username=${params.username}`)
       setUser(res.data)
     } catch (error) {
 
