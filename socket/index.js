@@ -1,6 +1,10 @@
+const io = require("socket.io")(8900,{
+    cors:{
+        origin:"http://localhost:3000",
+    }
+})
 
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+
 
 
 let users = [];

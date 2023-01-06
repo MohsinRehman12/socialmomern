@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import {axiosInstance} from "../../config";
 import React, { useEffect, useState } from 'react'
 import "./ChatOnline.css"
 export default function ChatOnline({onlineUsers, currentId, setCurrentChat}) {
@@ -10,12 +10,12 @@ export default function ChatOnline({onlineUsers, currentId, setCurrentChat}) {
 
     const handleClick =  async (user) => {
       try {
-        const res = await Axios.get(`/convo/find/${currentId}/${user._id}`);
+        const res = await axiosInstance.get(`/convo/find/${currentId}/${user._id}`);
         setCurrentChat(res.data);
       } catch (error) {
         if ((error.message).includes("404")){
           try {
-            const res = await Axios.post('/convo', {
+            const res = await axiosInstance.post('/convo', {
               senderId:currentId,
               recieverId:user._id
             });
@@ -28,7 +28,7 @@ export default function ChatOnline({onlineUsers, currentId, setCurrentChat}) {
     }
     useEffect(()=>{
       const getUsers = async ()=>{
-        const res = await Axios.get("/users/friends/"+currentId)
+        const res = await axiosInstance.get("/users/friends/"+currentId)
         setFriends(res.data);
       }
 

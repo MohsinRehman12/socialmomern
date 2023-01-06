@@ -1,11 +1,11 @@
 import React from 'react'
 import  { useState, useEffect, useContext } from 'react'
-import Axios from "axios";
 
 import "./Edit.css";
 import { AuthContext } from '../../context/AuthContext';
 import Navbar from '../../components/navbar/Navbar';
 import { useNavigate } from "react-router";
+import { axiosInstance } from '../../config';
 
 export default function Edit() {
 
@@ -40,7 +40,7 @@ export default function Edit() {
             try {
 
             
-                    const res = await Axios.get("users/checkE/" + email);
+                    const res = await axiosInstance.get("users/checkE/" + email);
         
                 
                 
@@ -64,7 +64,7 @@ export default function Edit() {
         if(username && testCheck=== true){
             try {
 
-                const res = await Axios.get("users/checkU/" + username);
+                const res = await axiosInstance.get("users/checkU/" + username);
         
                 console.log(res);
 
@@ -94,49 +94,49 @@ export default function Edit() {
         try {
 
             if(desc){
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {desc:desc, userId:user._id }
                 );
             }
 
             if(password){
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {password:password, userId:user._id }
                 );
             }
 
             if(from){
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {from:from, userId:user._id }
                 );
             }
 
             if(current){
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {city:current, userId:user._id }
                 );
             }
 
             if(relationship){
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {relationship:relationship, userId:user._id }
                 );
             }
 
             if(birthDate){
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {birthday:birthDate, userId:user._id }
                 );
             }
 
             if(firstName){
                 
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {firstName:firstName, userId:user._id }
                 );
             }
             if(lastName){
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {lastName:lastName, userId:user._id }
                 );
             }
@@ -149,7 +149,7 @@ export default function Edit() {
                 data.append("file", coverPfp)
                 setCoverPfp(fileName);          
                 try {
-                  await Axios.post("/upload", data)
+                  await axiosInstance.post("/upload", data)
           
                 } catch (error) {
                     testCheck = false;;
@@ -164,7 +164,7 @@ export default function Edit() {
             
           
               try {
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {coverPicture:fileName, userId:user._id})
                 let x = JSON.parse(localStorage.getItem(["user"]))
                 x.coverPicture=fileName;
@@ -191,7 +191,7 @@ export default function Edit() {
                 data.append("file", filePfp)
                 setFilePfp(fileName);          
                 try {
-                  await Axios.post("/upload", data)
+                  await axiosInstance.post("/upload", data)
 
                 } catch (error) {
                     testCheck = false;;
@@ -206,7 +206,7 @@ export default function Edit() {
             
           
               try {
-                const res = await Axios.put("users/" + user._id,
+                const res = await axiosInstance.put("users/" + user._id,
                 {profilePicture:fileName, userId:user._id})
 
                 let x = JSON.parse(localStorage.getItem(["user"]))

@@ -3,7 +3,7 @@ import "./Share.css"
 import {PermMedia, Label,Room, EmojiEmotions} from "@mui/icons-material"
 import {AuthContext} from '../../context/AuthContext'
 import { useContext } from 'react';
-import Axios from 'axios';
+import { axiosInstance } from '../../config';
 
 export default function Share() {
 
@@ -30,7 +30,7 @@ export default function Share() {
       newPost.img = fileName;
 
       try {
-        await Axios.post("/upload", data)
+        await axiosInstance.post("/upload", data)
         window.location.reload()
 
       } catch (error) {
@@ -40,7 +40,7 @@ export default function Share() {
     }
 
     try {
-      await Axios.post("/posts", newPost)
+      await axiosInstance.post("/posts", newPost)
       window.location.reload()
 
     } catch (error) {

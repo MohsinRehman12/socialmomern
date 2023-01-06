@@ -17,6 +17,7 @@ import Axios from "axios";
 
 import {useNavigate} from "react-router";
 import { useEffect } from 'react';
+import { axiosInstance } from '../../config';
 
 function App() {
 
@@ -50,7 +51,7 @@ function App() {
       }
       try {
         const res = 
-        await Axios.post("/auth/register", user)
+        await axiosInstance.post("/auth/register", user)
         navigate("/login");
 
       } catch (error) {

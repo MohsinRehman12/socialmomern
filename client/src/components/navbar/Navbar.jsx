@@ -12,6 +12,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
 import Axios from 'axios';
+import { axiosInstance } from '../../config';
 export default function Navbar() {
   const PublicFolder = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -73,7 +74,7 @@ const openF = Boolean(anchorElF);
   const handleSubmit = async(e) =>{
     let profileSearch=([]);
     try {
-      const res = await Axios.get("/users/getUA/" + seachUser)
+      const res = await axiosInstance.get("/users/getUA/" + seachUser)
         let x = res.data;
         navigate ("/search", {state:{x}})        
     } catch (error) {

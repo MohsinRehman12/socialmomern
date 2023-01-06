@@ -7,10 +7,10 @@ import Message from '../../components/message/Message'
 import Navbar from '../../components/navbar/Navbar'
 import { AuthContext } from '../../context/AuthContext'
 import "./messenger.css"
-import Axios from "axios"
 import { useRef } from 'react'
 import {io} from 'socket.io-client'
 import { SocketContext } from '../../context/SocketContext';
+import { axiosInstance } from '../../config'
 
 const Messenger = ( ) => {
 
@@ -76,7 +76,7 @@ const Messenger = ( ) => {
     const getConvo = async () =>{
 
         try {
-            const res = await Axios.get("/convo/"+user._id)
+            const res = await axiosInstance.get("/convo/"+user._id)
             setConvo(res.data)
         } catch (error) {
 
@@ -95,7 +95,7 @@ const Messenger = ( ) => {
     const getMessage = async () =>{
 
         try {
-            const res =  await Axios.get("/message/"+currentChat?._id)
+            const res =  await axiosInstance.get("/message/"+currentChat?._id)
             setMessages(res.data)
         } catch (error) {
 
@@ -136,7 +136,7 @@ const Messenger = ( ) => {
     } )
 
     try {
-        const res =  await Axios.post("/message", message);
+        const res =  await axiosInstance.post("/message", message);
         setMessages([...messages, res.data])
         setNewMessage('');
         

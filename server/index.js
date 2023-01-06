@@ -16,7 +16,6 @@ var cors = require('cors')
 const path = require('path')
 
 const PORT = process.env.PORT || 5050;
-const http = require('http').Server(app);
 
 dotenv.config();
 mongoose.set('strictQuery', false);
@@ -28,6 +27,7 @@ mongoose.connect(process.env.MONGO_URL,
 .catch((err) => console.log(err));
 
 const app = express();
+const http = require('http').Server(app);
 
 //middleware
 app.use(cors())
@@ -70,7 +70,11 @@ app.use("/api/comment" , commentRoute)
 
 
 
+app.use(express.static(path.join(__dirname, "/<front end app folder name>/build")));
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
+});
 
 
 app.get("/", (req,res)=> {
@@ -80,6 +84,6 @@ app.get("/", (req,res)=> {
 app.get("/users", (req,res)=> {
     res.send("welcome to users page")
 })
-http.listen(PORT, ()=>{
+app.listen(PORT, ()=>{
     console.log("Server is running")
 })

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {axiosInstance} from '../../config';
 import React, { useEffect, useState } from 'react'
 import "./Comment.css"
 export default function Comment({comments}) {
@@ -9,7 +9,7 @@ export default function Comment({comments}) {
     const getCommenter = async () =>{
 
     try {
-        const res = await axios.get("/users?userId="+comments.sender)
+        const res = await axiosInstance.get("/users?userId="+comments.sender)
         setUser(res.data)
       }
       
