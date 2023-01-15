@@ -7,6 +7,7 @@ import Messenger from "./pages/messenger/Messenger";
 import Register from "./pages/Register/Register"
 import React, { useContext, useEffect, useState } from "react";
 import Edit from "./pages/edit/Edit"
+import About from "./pages/about/About";
 import { createRoot } from "react-dom/client";
 import {
   BrowserRouter,
@@ -68,6 +69,10 @@ const App = () => {
         </Route>
 
         <Route exact path="/search" element={!user ? <Navigate to="/" /> :<FindUser/>}>
+
+        </Route>
+
+        <Route exact path="/about" element={!user ? <Navigate to="/" /> :<About/>}>
 
         </Route>
 

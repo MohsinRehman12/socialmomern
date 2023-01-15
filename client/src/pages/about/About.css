@@ -1,0 +1,138 @@
+.columnAbout {
+    float: left;
+    width: 100%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+  
+  .aboutHeader{
+    text-align: center;
+  }
+  .cardAbout {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+    border-radius: 10px
+  }
+  
+  .aboutImg{
+      border-radius: 10px 10px 0px 0px;
+      width: 100%;
+  }
+  
+  .about-section {
+    padding: 50px;
+    text-align: center;
+    background-color: #343434;
+    color: whitesmoke;
+  }
+  
+  .container {
+    padding: 0 16px;
+  }
+  
+  .containerAbout::after, .rowAbout::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .titleAbout {
+    color: grey;
+  }
+  
+  
+  
+  
+  
+  @media screen and (max-width: 650px) {
+    .columnAbout {
+      width: 100%;
+      display: block;
+    }
+    .aboutText{
+        font-size: 12px;
+    }
+  }
+
+  @media screen and (max-width: 478px) {
+    
+    .aboutName{
+        font-size: 15px;
+    }
+    
+    .titleAbout{
+        font-size: 12px;
+    }
+
+    
+  }
+
+  @media screen and (max-width: 305px) {
+    
+    .aboutName{
+        font-size: 12px;
+    }
+
+    .aboutText{
+        font-size: 8px;
+    }
+
+    
+  }
+
+  
+  
+  
+
+  
+  .columnAbout {
+    float: left;
+    width: 50%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+    margin-left: 25%;
+    margin-right: 25%;
+
+  }
+  
+  .cardAbout {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+    border-radius: 10px
+  }
+  
+  .aboutImg{
+      border-radius: 10px 10px 0px 0px;
+  }
+  
+  
+  .container {
+    padding: 0 16px;
+  }
+  
+  .containerAbout::after, .rowAbout::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .titleAbout {
+    color: grey;
+  }
+
+  .aboutText{
+    margin-left: 5%;
+    margin-right: 5%;
+    word-wrap: break-word;
+  }
+
+  .aboutName, .titleAbout{
+    margin-left: 5%;
+    margin-right: 5%;
+    word-wrap: break-word;
+
+  }
+
+  .aboutName{
+    margin-top: 15px;
+  }

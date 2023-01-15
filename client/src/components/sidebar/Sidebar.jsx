@@ -69,7 +69,7 @@ export default function Sidebar() {
          
         
           <li className="sidebarListItem">
-            <Link to="/About">
+            <Link to="/about">
             <HelpOutline className="sidebarIcon" />
             <span className="sidebarListItemText">About</span>
             </Link>

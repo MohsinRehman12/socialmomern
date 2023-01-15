@@ -139,7 +139,13 @@ function App() {
   }
 
   const testChange = async (e) =>{
-    if(password.current.value.includes(" ")
+
+   if(password.current.value !== passwordAgain.current.value){
+      setPasswordStatus("Passwords Dont Match")
+      setDisableButton(true)
+
+    }
+    else if(password.current.value.includes(" ")
     || password.current.value.includes("/")
     || password.current.value.includes("@")
     || password.current.value.includes("#")
@@ -166,7 +172,8 @@ function App() {
     || password.current.value.includes("|")
     || password.current.value.includes("!")
 
-    ){
+    )
+    {
       setDisableButton(true)
       setPasswordStatus("password can only include [a-Z], [0-9] and _ or -")
     }
@@ -176,31 +183,27 @@ function App() {
       setDisableButton(true)
     }
 
-    else if(passwordAgain.current.value !== password.current.value){
-      setPasswordStatus("Passwords Dont Match")
-      setDisableButton(true)
-
-    }
+    
     else if(passwordAgain.current.value.length <6 || password.current.value.length <6){
       setPasswordStatus("Passwords must be 6 or more characters")
       setDisableButton(true)
 
 
-    }else if(registerStatus==="" && usernameStatus==="" && passwordStatus ==""){
-      setDisableButton(false)
-
-    }
-
-    
-
-    else{
+    }else{
       setPasswordStatus("")
+      setDisableButton(false)
     }
 
 
   }
+  
   useEffect(()=>{
-    
+    if(registerStatus==="" && usernameStatus==="" && passwordStatus ==""
+    && username.current.value!=null && password.current.value!=null && passwordAgain.current.value!=null
+  ){
+    setDisableButton(false)
+
+  }  
 
   }, [password])
   

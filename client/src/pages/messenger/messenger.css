@@ -73,7 +73,7 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: rgb(111, 15, 111);
+    background-color: #272727;
     color: white;
 }
 
@@ -84,3 +84,47 @@
     color: #616161;
     text-align: center;
 }
+
+
+
+@media (max-width: 499px) {
+.chatBoxWrapper{
+    width: 425px;
+}
+
+.chatOnlineWrapper{
+    margin-left: 225%;
+    overflow:hidden;
+    width: 50px;
+}
+.chatOnlineImg{
+
+}
+}
+
+
+@media (max-width: 400px) {
+    .chatBoxWrapper{
+        width: 325px;
+    }
+    
+    .chatOnlineWrapper{
+        margin-left: 225%;
+        overflow:hidden;
+        width: 50px;
+    }
+    
+    }
+
+    @media (max-width: 275px) {
+        .chatBoxWrapper{
+            width: 300px;
+        }
+        
+        .chatOnlineWrapper{
+            margin-left: 225%;
+            overflow:hidden;
+            width: 50px;
+        }
+        
+        }
