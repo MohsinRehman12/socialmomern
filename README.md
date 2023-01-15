@@ -2,6 +2,8 @@
 Local Verion of Social Mo App created by Mohsin Rehman which is deployed on
 https://socialmo.herokuapp.com/
 
+It is a full stack MERN application hence the name socialmomern
+
 To run it you will need a MongoDB account and VScode
 
 Copy the github repository link of the project by pressing code and copying the link
