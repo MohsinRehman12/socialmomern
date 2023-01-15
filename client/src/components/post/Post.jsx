@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import "./Post.css"
 import {MoreVert, Favorite, Recommend, Comment, FavoriteBorderOutlined} from "@mui/icons-material"
-import Axios from "axios";
 import {format} from "timeago.js";
 import {Link} from "react-router-dom";
 import { useContext } from 'react';
@@ -11,6 +10,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Comments from "../comment/Comments"
 import { SocketContext } from '../../context/SocketContext';
+import { axiosInstance } from '../../config';
 export default function Post({post}) {
 
 
@@ -39,7 +39,7 @@ export default function Post({post}) {
     
 
     try {
-    Axios.put ("/posts/"+post._id+"/like",  
+    axiosInstance.put ("/posts/"+post._id+"/like",  
     {userId:currentUser._id})
 
     } catch (error) {
@@ -69,7 +69,7 @@ export default function Post({post}) {
     try {
 
       const fetchUser= async () =>{
-        const res = await Axios.get(`/users?userId=${post.userId}`)
+        const res = await axiosInstance.get(`/users?userId=${post.userId}`)
         setUser(res.data)
       }
           fetchUser();
@@ -85,7 +85,7 @@ export default function Post({post}) {
     const getComments = async () =>{
 
         try {
-            const res =  await Axios.get("/comment/"+post?._id)
+            const res =  await axiosInstance.get("/comment/"+post?._id)
             setComments(res.data)
         } catch (error) {
 
@@ -107,7 +107,7 @@ export default function Post({post}) {
   }
 
     try {
-        const res =  await Axios.post("/comment", comment);
+        const res =  await axiosInstance.post("/comment", comment);
         setComments([...comments, res.data])
         setNewComment('');
 

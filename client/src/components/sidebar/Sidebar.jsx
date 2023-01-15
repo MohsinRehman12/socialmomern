@@ -12,7 +12,7 @@ import {
   HelpOutline,
 } from "@mui/icons-material"
 
-import Axios from 'axios'
+import { axiosInstance } from '../../config'
 
 
 
@@ -28,7 +28,7 @@ export default function Sidebar() {
     const getFollowers = async () =>{
       try {
 
-        const friendList = await Axios.get("/users/friends/"+user._id)
+        const friendList = await axiosInstance.get("/users/friends/"+user._id)
         
         setFriends(friendList.data)
 
@@ -69,7 +69,7 @@ export default function Sidebar() {
          
         
           <li className="sidebarListItem">
-            <Link to="/About">
+            <Link to="/about">
             <HelpOutline className="sidebarIcon" />
             <span className="sidebarListItemText">About</span>
             </Link>

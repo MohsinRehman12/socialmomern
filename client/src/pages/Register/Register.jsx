@@ -17,6 +17,7 @@ import Axios from "axios";
 
 import {useNavigate} from "react-router";
 import { useEffect } from 'react';
+import { axiosInstance } from '../../config';
 
 function App() {
 
@@ -50,7 +51,7 @@ function App() {
       }
       try {
         const res = 
-        await Axios.post("/auth/register", user)
+        await axiosInstance.post("/auth/register", user)
         navigate("/login");
 
       } catch (error) {
@@ -138,7 +139,13 @@ function App() {
   }
 
   const testChange = async (e) =>{
-    if(password.current.value.includes(" ")
+
+   if(password.current.value !== passwordAgain.current.value){
+      setPasswordStatus("Passwords Dont Match")
+      setDisableButton(true)
+
+    }
+    else if(password.current.value.includes(" ")
     || password.current.value.includes("/")
     || password.current.value.includes("@")
     || password.current.value.includes("#")
@@ -165,7 +172,8 @@ function App() {
     || password.current.value.includes("|")
     || password.current.value.includes("!")
 
-    ){
+    )
+    {
       setDisableButton(true)
       setPasswordStatus("password can only include [a-Z], [0-9] and _ or -")
     }
@@ -175,31 +183,27 @@ function App() {
       setDisableButton(true)
     }
 
-    else if(passwordAgain.current.value !== password.current.value){
-      setPasswordStatus("Passwords Dont Match")
-      setDisableButton(true)
-
-    }
+    
     else if(passwordAgain.current.value.length <6 || password.current.value.length <6){
       setPasswordStatus("Passwords must be 6 or more characters")
       setDisableButton(true)
 
 
-    }else if(registerStatus==="" && usernameStatus==="" && passwordStatus ==""){
-      setDisableButton(false)
-
-    }
-
-    
-
-    else{
+    }else{
       setPasswordStatus("")
+      setDisableButton(false)
     }
 
 
   }
+  
   useEffect(()=>{
-    
+    if(registerStatus==="" && usernameStatus==="" && passwordStatus ==""
+    && username.current.value!=null && password.current.value!=null && passwordAgain.current.value!=null
+  ){
+    setDisableButton(false)
+
+  }  
 
   }, [password])
   
@@ -243,9 +247,7 @@ function App() {
                 required type='email' 
                 size="lg"/>
 
-              <div className="nameBox">
               <MDBInput 
-                className='nameInput'
                 wrapperClass='mb-4' 
                 label='Enter First Name ' 
                 ref = {firstName} 
@@ -257,7 +259,6 @@ function App() {
                 />
 
                 <MDBInput 
-                className='nameInput'
                 wrapperClass='mb-4' 
                 label='Enter Last Name ' 
                 ref = {lastName} 
@@ -269,7 +270,6 @@ function App() {
                 />
 
 
-              </div>
                 
                 <p className='passwordStatusText'>{passwordStatus}</p>
                 <MDBInput 

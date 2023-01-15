@@ -1,6 +1,6 @@
 .navbarContainer{
     height: 50px;
-    width: inherit;
+    width: 100%;
     background-color: #272727 ;
     color: whitesmoke;
     display: flex;
@@ -8,9 +8,9 @@
     position: sticky;
     top: 0;
     z-index: 999;
-    min-width: auto;
     
 }
+
 .navbarLeft{
     flex: 3;
 }
@@ -20,6 +20,73 @@
     min-width: 50%;
     display: flex;
 
+}
+
+@media (max-width: 658px) {
+
+    .navbarCenter{
+        flex: 5;
+        width: 50%;
+        display: flex;
+        position: absolute;
+        bottom: 5px;
+        margin-left: 30%;
+    
+    }
+
+    .navbarContainer{
+        height: 120px;
+        object-fit: cover;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .navbarCenter{
+        flex: 5;
+        width: 50%;
+        display: flex;
+        position: absolute;
+        bottom: 5px;
+        margin-left: 30%;
+    
+    }
+
+    .navbarContainer{
+        height: 120px;
+        width: 140%;
+        object-fit: cover;
+    }
+
+}
+
+@media (max-width: 321px) {
+
+    .navbarCenter{
+        flex: 5;
+        width: 50%;
+        display: flex;
+        position: absolute;
+        bottom: 5px;
+        margin-left: 30%;
+    
+    }
+
+    .navbarRight{
+        margin-right: 20%;
+    }
+
+    .navbarLeft{
+        padding-left: -30%;
+    }
+
+    .navbarContainer{
+        height: 120px;
+        width: 165%;
+        object-fit: cover;
+    }
 }
 
 .navbarImg{

@@ -5,6 +5,7 @@
 }
 .searchUserWrapper{
     display: flex;
+    background-color: whitesmoke;
 }
 
 .searchUserContainer{

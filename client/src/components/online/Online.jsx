@@ -1,6 +1,7 @@
 import Axios from 'axios';
 import React, { useContext, useEffect } from 'react'
 import { useState } from 'react';
+import { axiosInstance } from '../../config';
 import { AuthContext } from '../../context/AuthContext';
 
 export default function Online({onlineUsers}) {
@@ -11,7 +12,7 @@ export default function Online({onlineUsers}) {
 
   useEffect(()=>{
     const getUsers = async ()=>{
-      const res = await Axios.get("/users/friends/"+currentUser._id)
+      const res = await axiosInstance.get("/users/friends/"+currentUser._id)
       setFriends(res.data);
     }
 

@@ -4,6 +4,7 @@ import Share from '../share/Share'
 import "./Feed.css"
 import Axios from "axios";
 import { AuthContext } from '../../context/AuthContext';
+import { axiosInstance } from '../../config';
 
 
 export default function Feed({username}) {
@@ -15,8 +16,8 @@ export default function Feed({username}) {
     
     const fetchPosts= async () =>{
       const res = username 
-      ? await Axios.get("/posts/profile/"+ username)
-      : await Axios.get("/posts/timeline/" + user._id)
+      ? await axiosInstance.get("/posts/profile/"+ username)
+      : await axiosInstance.get("/posts/timeline/" + user._id)
 
       setPosts(res.data.sort((p1,p2)=>{
         return new Date(p2.createdAt)- new Date(p1.createdAt)

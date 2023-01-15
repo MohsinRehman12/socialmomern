@@ -2,12 +2,12 @@ import React, { useEffect, useState, useContext, useRef } from 'react'
 import "./Rightbar.css"
 import { PersonAddAltOutlined, PersonRemoveOutlined} from "@mui/icons-material"
 import Online from "../online/Online"
-import Axios from 'axios'
 import { AuthContext } from "../../context/AuthContext";
 import {Link} from "react-router-dom"
 import { useNavigate } from 'react-router-dom'
 import {io} from 'socket.io-client'
 import { SocketContext } from '../../context/SocketContext'
+import { axiosInstance } from '../../config'
 
 const Rightbar=({ user, onlineUsers })=> {
 
@@ -50,7 +50,7 @@ const Rightbar=({ user, onlineUsers })=> {
     const getFollowers = async () =>{
       try {
 
-        const friendList = await Axios.get("/users/friends/"+currentUser._id)
+        const friendList = await axiosInstance.get("/users/friends/"+currentUser._id)
         
         setFriends(friendList.data)
 
@@ -67,11 +67,11 @@ const Rightbar=({ user, onlineUsers })=> {
   const handleClick = async () =>{
     try {
       if(followed){
-        await Axios.put(`/users/${user._id}/unfollow`, {userId:currentUser._id})
+        await axiosInstance.put(`/users/${user._id}/unfollow`, {userId:currentUser._id})
         dispatch({type:"UNFOLLOW", payload:user._id})
       }
       else{
-        await Axios.put(`/users/${user._id}/follow`, {userId:currentUser._id})
+        await axiosInstance.put(`/users/${user._id}/follow`, {userId:currentUser._id})
         dispatch({type:"FOLLOW", payload:user._id})
 
       }
@@ -98,7 +98,7 @@ const Rightbar=({ user, onlineUsers })=> {
   const handleClickMessage= async ()=>{
 
     try {
-      const res = await Axios.post('/convo', {
+      const res = await axiosInstance.post('/convo', {
         senderId:currentUser._id,
         recieverId:user._id
       });
